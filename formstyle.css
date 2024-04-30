@@ -1,0 +1,27 @@
+/**/
+
+.form_btn{
+    margin-left: auto;
+    float: right;
+    padding: 5px 10px;
+
+    color: rgba(0, 0, 0, 0.9);
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.4);
+
+    border-radius:5px;    
+    border: 1px solid rgba(0, 0, 0, 0.7);
+}
+.form_btn:hover{
+    color: rgba(0, 0, 0,1);
+    background-color: rgba(255, 255, 255, 0.8);
+    
+}
+
+form input{
+    padding: 0px 5px;
+    border-radius: 5px;
+}
+form .bar_button{
+    border-radius: 5px;
+}
