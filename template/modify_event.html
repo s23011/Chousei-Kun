@@ -1,61 +1,36 @@
-<!DOCTYPE html>
-<html lang="jp">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Home Page</title> -->
-    <!--CSS-->
-    <link rel="stylesheet" type="text/css" href="mystyle.css">
-    <link rel="stylesheet" type="text/css" href="formstyle.css">
+<!--Contents-->
+<div class="container sub_content bg_col_w1 ">
+    <h1>イベント</h1>
+    
+    <div class="item_textBox">
+        <div class="item_textBox0">
+            <div class="sub_content">
+                <form id="create_event"   action="controller/modify_event.php" method="post">
+                    <label><p>イベント名</p></label><br>
+                    ※忘年会、打ち合わせなど<br>
+                    <input type="text" name="event_name" id="name" value="" required><br>
+                    
+                    <label><p>メモ</p></label><br>
+                    ※飲み会の日程調整しましょう！<br>
+                    <textarea name="event_memo" id="memo" value="" ></textarea><br>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body class="bg_col">
-    <div id="navbar"></div>
-    <!--Contents-->
-    <div class="container sub_content bg_col_w1 ">
-        <h1>イベント</h1>
+                    <label><p>日程候補</p></label><br>
+                    ※候補日程／日時を入力してください<br>
+                    候補の区切りは改行で判断されます。<br>
+                    <br>
+                    例：<br>
+                    　8/7(月) 20:00<br>
+                    　8/8(火) 20:00<br>
+                    　8/9(水) 21:00<br>
+                
+                    <textarea name="event_dates" id="dates" required></textarea><br>
         
-        <div class="item_textBox">
-            <div class="item_textBox0">
-                <div class="sub_content">
-                    <form id="create_event"   action="controller/modify_event.php" method="post">
-                        <label><p>イベント名</p></label><br>
-                        ※忘年会、打ち合わせなど<br>
-                        <input type="text" name="event_name" id="name" value="" required><br>
-                        
-                        <label><p>メモ</p></label><br>
-                        ※飲み会の日程調整しましょう！<br>
-                        <textarea name="event_memo" id="memo" value="" ></textarea><br>
-
-                        <label><p>日程候補</p></label><br>
-                        ※候補日程／日時を入力してください<br>
-                        候補の区切りは改行で判断されます。<br>
-                        <br>
-                        例：<br>
-                        　8/7(月) 20:00<br>
-                        　8/8(火) 20:00<br>
-                        　8/9(水) 21:00<br>
                     
-                        <textarea name="event_dates" id="dates" required></textarea><br>
-            
-                        
-                        <!-- <a class="bar_button" href='signup.html' style="float: right;">signup</a> -->
-                        <input type="submit" class="form_btn" value="出欠表作成">
-                    </form>
-                    
-                </div>                
-            </div>
-        </div>        
-    </div>
-    <!--footer-->
-    <div id="footer"></div>
-    <!--Script-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-    <script type="text/javascript" src="myscript.js"></script>
-    <!-- <script type="text/javascript" src="user.js"></script> -->
-</body>
-</html>
+                    <!-- <a class="bar_button" href='signup.html' style="float: right;">signup</a> -->
+                    <input type="submit" class="form_btn" id="submit" value="出欠表作成">
+                </form>
+                
+            </div>                
+        </div>
+    </div>        
+</div>
