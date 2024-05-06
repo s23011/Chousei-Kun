@@ -14,7 +14,7 @@ if(get_event_info_from_event_id($event_id) == 0){
     $event_info = [
         'event_name'=> $global_event_name,
         'event_memo'=>$global_event_memo,
-        'event_dates'=>$global_event_dates];
+        'event_dates'=>$global_event_dates]; //dates is a array object
     echo json_encode($event_info); 
 }
 ?>

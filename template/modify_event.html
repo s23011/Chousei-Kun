@@ -6,27 +6,36 @@
         <div class="item_textBox0">
             <div class="sub_content">
                 <form id="create_event"   action="controller/modify_event.php" method="post">
-                    <label><p>イベント名</p></label><br>
-                    ※忘年会、打ち合わせなど<br>
-                    <input type="text" name="event_name" id="name" value="" required><br>
-                    
-                    <label><p>メモ</p></label><br>
-                    ※飲み会の日程調整しましょう！<br>
-                    <textarea name="event_memo" id="memo" value="" ></textarea><br>
+                    <div>
+                        <label for="name"><p>イベント名</p></label><br>
+                        ※忘年会、打ち合わせなど<br>
+                        <input type="text" name="event_name" id="name" value="" required><br>
+                    </div>
 
-                    <label><p>日程候補</p></label><br>
-                    ※候補日程／日時を入力してください<br>
-                    候補の区切りは改行で判断されます。<br>
-                    <br>
-                    例：<br>
-                    　8/7(月) 20:00<br>
-                    　8/8(火) 20:00<br>
-                    　8/9(水) 21:00<br>
-                
-                    <textarea name="event_dates" id="dates" required></textarea><br>
-        
-                    
-                    <!-- <a class="bar_button" href='signup.html' style="float: right;">signup</a> -->
+                    <div>
+                        <label for="memo"><p>メモ</p></label><br>
+                        ※飲み会の日程調整しましょう！<br>
+                        <textarea name="event_memo" id="memo" value="" ></textarea><br>
+                    </div>
+
+                    <div>
+                        <label for="dates"><p>日程候補</p></label><br>
+                        ※候補日程／日時を入力してください<br>
+                        候補の区切りは改行で判断されます。<br>
+                        <br>
+                        例：<br>
+                        　8/7(月) 20:00<br>
+                        　8/8(火) 20:00<br>
+                        　8/9(水) 21:00<br>
+
+                        <div>
+                            <textarea name="event_dates" id="dates" required></textarea><br>
+                        </div>
+
+                        <div id="datepicker">
+                        </div>
+                    </div>
+
                     <input type="submit" class="form_btn" id="submit" value="出欠表作成">
                 </form>
                 
