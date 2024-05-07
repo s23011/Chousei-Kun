@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include("./access_db.php");
+    include("../model/access_db.php");
 
     $event_id = $_SESSION['event_id'];
     $input_attendeeName = htmlspecialchars($_POST['attendeeName']);
@@ -16,5 +16,5 @@
         }
     }
 
-    header( "Location: ./view_attendee.php" ); exit;
+    header( "Location: ../controller/view_attendee.php" ); exit;
 ?>

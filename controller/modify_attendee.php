@@ -1,14 +1,14 @@
 <?php
   session_start();
-  include("./access_db.php");
+  include("../model/access_db.php");
 
   #temparely
   $_SESSION['event_id'] = 0;
   $_SESSION['isCreator'] = True;
   $_SESSION['view_mode'] = False;
   $_SESSION['modify_event_link'] = "#";
-  $_SESSION['create_attendee_link'] = "./create_attendee.php";
-  $_SESSION['form_action'] = "post_form_modify.php";
+  $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";
+  $_SESSION['form_action'] = "../controller/post_form_modify.php";
 
   # view part
   $event_id = $_SESSION['event_id'];
@@ -43,5 +43,5 @@
   $att_name = $_GET['att_name'];
   $_SESSION['attName'] = $att_name;
 
-  header( "Location: ./view_modify_attendee.php" ); exit;
+  header( "Location: ../template/view_modify_attendee.php" ); exit;
 ?>

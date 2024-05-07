@@ -97,7 +97,7 @@
                             <th scope="col">✕</th>
                             <?php foreach ($attendee_names as $att_name): ?>
                                 <th scope="col">
-                                <a class="btny" href="./modify_attendee.php?att_name=<?php echo urlencode($att_name); ?>" role="button"><?php echo htmlspecialchars($att_name); ?></a>
+                                <a class="btny" href="../controller/modify_attendee.php?att_name=<?php echo urlencode($att_name); ?>" role="button"><?php echo htmlspecialchars($att_name); ?></a>
                                 </th>
                             <?php endforeach; ?>
                         </tr>
