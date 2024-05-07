@@ -1,15 +1,15 @@
 <?php
   session_start();
-  include("./access_db.php");
+  include("../model/access_db.php");
 
   #temparely
   $_SESSION['event_id'] = 0;
   $_SESSION['isCreator'] = True;
   $_SESSION['view_mode'] = True;
   $_SESSION['modify_event_link'] = "#";
-  $_SESSION['create_attendee_link'] = "./create_attendee.php";
+  $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";
   $_SESSION['attName'] = '';
-  $_SESSION['form_action'] = 'post_form.php';
+  $_SESSION['form_action'] = '../controller/post_form.php';
 
   #permently part
   $event_id = $_SESSION['event_id'];
@@ -39,5 +39,5 @@
   }
   $_SESSION['thistime_attendee_statues'] = $thistime_attendee_statues;
   
-  header( "Location: ./view_modify_attendee.php" ); exit;
+  header( "Location: ../template/view_modify_attendee.php" ); exit;
 ?>

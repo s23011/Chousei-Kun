@@ -5,9 +5,9 @@ init_db();
 function init_db(){
     $dsn = 'mysql:dbname=chouseikun;host=localhost;charset=utf8;';
     try{
-        $GLOBALS["pdo"] = new PDO($dsn,'root','kickickic');
+        $GLOBALS["pdo"] = new PDO($dsn,'root','6251');
     }catch(PDOException $e){
-        return set_db_msg('Failed to connect to MySQL:'.e->getMessage());
+        return set_db_msg('Failed to connect to MySQL:'.$e->getMessage());
     }
 }
 
@@ -104,7 +104,7 @@ function delete_event_from_event_id($event_id){
 
     $sql = "DELETE FROM attendee_status WHERE event_id = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($event_id,$attendee_name));
+    $q->execute(array($event_id));
 
     return 0;
 }
@@ -112,20 +112,25 @@ function delete_event_from_event_id($event_id){
 
 
 
-function get_attendee_info_from_event_id_and_attendee_name($event_id,$attendee_name){
+function get_attendee_info_from_event_id($event_id){
     global $pdo;
 
-    $sql = "SELECT * FROM attendee_info WHERE event_id = ? AND attendee_name = ?";
+    $sql = "SELECT * FROM attendee_info WHERE event_id = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($event_id,$attendee_name));
+    $q->execute(array($event_id));
 
-    $row = $q->fetch();
+    $rows = $q->fetchAll();
+    global $global_attendee_num;
+    $global_attendee_num = 0;
+    if(empty($rows)){ return 0;}
 
-    if(!$row){ return set_db_msg("get attendee info error");}
+    global $global_attendee_names, $global_attendee_comments;
 
-    global $global_attendee_comment;
-
-    $global_attendee_comment = $row["comment"];
+    foreach($rows as $row){
+        $global_attendee_num++;
+        $global_attendee_names[] = $row['attendee_name'];
+        $global_attendee_comments[] = $row['comment'];
+    }
 
     return 0;
 }
@@ -161,7 +166,7 @@ function create_attendee_info($event_id,$attendee_name,$attendee_comment){
 
     if($row){ return set_db_msg("attendee info already exist");}
 
-    $sql = "INSERT INTO users VALUES (?,?,?)";
+    $sql = "INSERT INTO attendee_info VALUES (?,?,?)";
     $q = $pdo->prepare($sql);
     $q->execute(array($event_id,$attendee_name,$attendee_comment));
 
@@ -177,9 +182,10 @@ function create_attendee_status($event_id,$attendee_name,$date,$status){
     $q = $pdo->prepare($sql);
     $q->execute(array($event_id,$attendee_name,$date));
 
+    $row = $q->fetch();
     if($row){ return set_db_msg("attendee status already exist");}
 
-    $sql = "INSERT INTO users VALUES (?,?,?,?)";
+    $sql = "INSERT INTO attendee_status VALUES (?,?,?,?)";
     $q = $pdo->prepare($sql);
     $q->execute(array($event_id,$attendee_name,$date,$status));
 
@@ -271,11 +277,10 @@ function get_attendee_status_from_event_id_and_event_date($event_id,$date){
 
     if(!$rows){ return set_db_msg("get attendee status error");}
 
-    global $global_attendee_dates,$global_attendee_statuses;
+    global $global_attendee_statues;
+    $global_attendee_statues = null;
     foreach($rows as $row){
-        // $global_attendee_names[] = $row["attendee_name"];
-        // $global_attendee_dates[] = $row["date"];
-        $global_attendee_statuses[] = $row["status"];
+        $global_attendee_statues[] = $row["status"];
     }
 
     return 0;
