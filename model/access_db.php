@@ -35,6 +35,15 @@ function create_event($event_name,$event_dates,$event_memo){
     global $pdo;
     $sql = "SELECT count(*) FROM event_info";
     $create_event_id = $pdo->query($sql)->fetchColumn() +1;
+    //get row count
+    //get time
+    //create hash by row count + time,and limit hash length in 20.
+    //event id = hash
+
+    if(get_event_info_from_event_id($create_event_id)){
+        return set_db_msg("try again to create event");
+        //maybe return and try again is better than while loop to get new time for hash 
+    }
 
     $sql = "INSERT INTO event_info VALUES (?,?,?,?)";
     $q = $pdo->prepare($sql);
@@ -44,6 +53,8 @@ function create_event($event_name,$event_dates,$event_memo){
     
     global $global_event_id;
     $global_event_id = $create_event_id;
+
+
 
     return 0;
 }
@@ -79,13 +90,14 @@ function delete_event_from_event_id($event_id){
 
     if(!$row){ return set_db_msg("get event info error");}
 
+    //delete event info
     $sql = "DELETE FROM event_info WHERE event_id = ?";
     $q = $pdo->prepare($sql);
     $q->execute(array($event_id,));
 
     if(!$q){ return set_db_msg("delete event info error");}
 
-    //delete attendee info and status
+    //delete attendee status
     $sql = "DELETE FROM attendee_info WHERE event_id = ?";
     $q = $pdo->prepare($sql);
     $q->execute(array($event_id));
@@ -248,7 +260,7 @@ function delete_attendee_from_event_id_and_attendee_name($event_id,$attendee_nam
     return 0;
 }
 
-function get_attendee_status_all_from_event_id_and_event_date($event_id,$date){
+function get_attendee_status_from_event_id_and_event_date($event_id,$date){
     global $pdo;
 
     $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND date = ?";
@@ -261,8 +273,8 @@ function get_attendee_status_all_from_event_id_and_event_date($event_id,$date){
 
     global $global_attendee_dates,$global_attendee_statuses;
     foreach($rows as $row){
-        $global_attendee_names[] = $row["attendee_name"];
-        $global_attendee_dates[] = $row["date"];
+        // $global_attendee_names[] = $row["attendee_name"];
+        // $global_attendee_dates[] = $row["date"];
         $global_attendee_statuses[] = $row["status"];
     }
 

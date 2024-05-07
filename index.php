@@ -12,7 +12,7 @@
     </div>
 
     <?php
-    include "chouseikun.php";
+    include_once("view_modify_event.php");
     ?>
 
 </body>

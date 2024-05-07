@@ -1,9 +1,11 @@
 <?php 
 session_start();
 
-
-// //session test
-// $_SESSION["event_id"]=4;
+if(isset($_GET["eid"])){
+    $_SESSION["event_id"]=$_GET["eid"];
+}else{
+    unset($_SESSION["event_id"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +13,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Home Page</title> -->
+    <title>調整くん：新しいイベント</title>
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="mystyle.css">
     <link rel="stylesheet" type="text/css" href="formstyle.css">
@@ -30,6 +32,10 @@ session_start();
     }
 
     include "template/modify_event.html";
+
+    if(isset($_SESSION["event_id"])){
+        // setup 「戻る」button to link view_event page when modify mode
+    }
     ?>
 </body>
 </html>
@@ -45,7 +51,7 @@ session_start();
 <!--Script-->
 <script type="text/javascript" src="myscript.js"></script>
 <script type="text/javascript">
-    get_event_info();
+    get_event_info(); // function from myscript.js
 
     $('#datepicker').datepicker({
             todayHighlight: true,
@@ -55,12 +61,3 @@ session_start();
         $('#dates').val($('#dates').val()+$('#datepicker').datepicker('getFormattedDate')+'\r\n');
     });
 </script>
-
-
-<?php
-//session test
-if(isset($_SESSION["event_id"])){
-    // session_unset();    // remove all session variables
-    // session_destroy();  // destroy the session  
-}
-?>
