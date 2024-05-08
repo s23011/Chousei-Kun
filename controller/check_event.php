@@ -3,7 +3,28 @@ include_once("../model/access_db.php");
 
 session_start();
 
-if(isset($_SESSION["event_name"])&isset($_SESSION["event_dates"])&isset($_SESSION["event_memo"])){
+if(isset($_SESSION["event_id"])){
+    $event_id = $_SESSION['event_id'];
+
+    if(get_event_info_from_event_id($event_id) == CODE_SUCCESS){
+        $event_info = [
+            'event_name'=> $global_event_name,
+            'event_memo'=>$global_event_memo,
+            'event_dates'=>$global_event_dates]; //dates is a array object
+
+        echo json_encode($event_info); 
+    }else{
+        echo json_encode($global_db_msg); 
+        http_response_code(400);
+    }
+
+    exit();
+}
+
+if(isset($_SESSION["event_name"])
+        &&isset($_SESSION["event_dates"])
+        &&isset($_SESSION["event_memo"])){
+            
     $event_name = $_SESSION['event_name'];
     $event_memo = $_SESSION['event_memo'];
     //event_dates in session is a text, not a array object 
@@ -13,20 +34,11 @@ if(isset($_SESSION["event_name"])&isset($_SESSION["event_dates"])&isset($_SESSIO
         'event_name'=> $event_name,
         'event_memo'=>$event_memo,
         'event_dates'=>$event_dates]; //dates is a array object
+
     echo json_encode($event_info); 
+
     exit();
 }
 
-if(isset($_SESSION["event_id"])){
-    $event_id = $_SESSION['event_id'];
 
-    if(get_event_info_from_event_id($event_id) == 0){
-        $event_info = [
-            'event_name'=> $global_event_name,
-            'event_memo'=>$global_event_memo,
-            'event_dates'=>$global_event_dates]; //dates is a array object
-        echo json_encode($event_info); 
-    }
-    exit();
-}
 ?>

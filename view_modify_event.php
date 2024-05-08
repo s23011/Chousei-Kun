@@ -13,7 +13,16 @@ if(isset($_GET["eid"])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>調整くん：新しいイベント</title>
+    <title>
+        調整くん
+        <?php
+            if(isset($_SESSION["event_id"])){
+                echo "：イベント編集";
+            }else{
+                echo "：イベント作成";
+            }
+        ?>
+    </title>
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="mystyle.css">
     <link rel="stylesheet" type="text/css" href="formstyle.css">
@@ -27,9 +36,9 @@ if(isset($_GET["eid"])){
 
 <body class="bg_col">
     <?php
-    if(isset($_SESSION["msg"])){
-        include "template/message.php";
-    }
+    include "template/navbar.php";
+
+    include "template/message.php";
 
     include "template/modify_event.html";
 

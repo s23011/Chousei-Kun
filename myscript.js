@@ -44,8 +44,6 @@ function get_attendee_info(){
         dataType: "json",
         success: function(event_info) {
             window.console.log(event_info);
-
-            setup_event_info(event_info.event_name,event_info.event_memo,event_info.event_dates)
         },
         error: function(error) {
             window.console.log(error);
