@@ -12,7 +12,9 @@ function get_event_info(){
             setup_event_info(event_info.event_name,event_info.event_memo,event_info.event_dates)
         },
         error: function(error) {
-            window.console.log(error);
+            window.console.log("get_event_info error");
+            // window.console.log(error);
+            // return_homepage();            
         }
     });
 }
@@ -33,6 +35,11 @@ function setup_event_info(name,memo,dates){
     });
 }
 
+function return_homepage(){
+    if(window.location.pathname != "/chouseikun/index.php"){
+        window.location.href = "index.php";
+    }
+}
 
 
 

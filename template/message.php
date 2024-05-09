@@ -3,7 +3,7 @@
 if(isset($_SESSION["msg"])){
 ?>
 
-<div style="color:red; background-color:gray; text-align:center;">
+<div class="bg-danger text-white my-1 p-1" style="text-align:center;">
     <h2>
 
     <?php  

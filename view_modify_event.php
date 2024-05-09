@@ -23,9 +23,9 @@ if(isset($_GET["eid"])){
             }
         ?>
     </title>
+    <link rel="icon" type="image/x-icon" href="/chouseikun/template/chouseikun.png">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="mystyle.css">
-    <link rel="stylesheet" type="text/css" href="formstyle.css">
     <!-- CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -34,9 +34,9 @@ if(isset($_GET["eid"])){
     <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js" integrity="sha256-J8ay84czFazJ9wcTuSDLpPmwpMXOm573OUtZHPQqpEU=" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg_col">
+<body class="container-fluid">
     <?php
-    include "template/navbar.php";
+    include "template/navbar.html";
 
     include "template/message.php";
 

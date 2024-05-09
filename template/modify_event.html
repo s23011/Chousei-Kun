@@ -1,45 +1,48 @@
 <!--Contents-->
-<div class="container sub_content bg_col_w1 ">
+<div class="border border-dark rounded-4 m-4">
     <h1>イベント</h1>
     
-    <div class="item_textBox">
-        <div class="item_textBox0">
-            <div class="sub_content">
-                <form id="create_event"   action="controller/modify_event.php" method="post">
-                    <div>
-                        <label for="name"><p>イベント名</p></label><br>
-                        ※忘年会、打ち合わせなど<br>
-                        <input type="text" name="event_name" id="name" value="" required><br>
-                    </div>
+    <div >
+        <form id="create_event" action="controller/modify_event.php" method="post">
+            <div class="border border-dark rounded-4 m-2 p-4 bg_col_dark_1">
+                <div>
+                    <label for="name" class=""><h4>イベント名</h4></label><br>
+                    ※忘年会、打ち合わせなど<br>
+                    <input type="text" name="event_name" id="name" value="" class="form-control" required><br>
+                </div>
+
+                <div>
+                    <label for="memo"><p>メモ</p></label><br>
+                    ※飲み会の日程調整しましょう！<br>
+                    <textarea name="event_memo" id="memo" value="" ></textarea><br>
+                </div>
+
+                <div>
+                    <label for="dates"><p>日程候補</p></label><br>
+                    ※候補日程／日時を入力してください<br>
+                    候補の区切りは改行で判断されます。<br>
+                    <br>
+                    例：<br>
+                    　8/7(月) 20:00<br>
+                    　8/8(火) 20:00<br>
+                    　8/9(水) 21:00<br>
 
                     <div>
-                        <label for="memo"><p>メモ</p></label><br>
-                        ※飲み会の日程調整しましょう！<br>
-                        <textarea name="event_memo" id="memo" value="" ></textarea><br>
+                        <textarea name="event_dates" id="dates" required></textarea><br>
                     </div>
 
-                    <div>
-                        <label for="dates"><p>日程候補</p></label><br>
-                        ※候補日程／日時を入力してください<br>
-                        候補の区切りは改行で判断されます。<br>
-                        <br>
-                        例：<br>
-                        　8/7(月) 20:00<br>
-                        　8/8(火) 20:00<br>
-                        　8/9(水) 21:00<br>
-
-                        <div>
-                            <textarea name="event_dates" id="dates" required></textarea><br>
-                        </div>
-
-                        <div id="datepicker">
-                        </div>
+                    <div id="datepicker">
                     </div>
-
-                    <input type="submit" class="form_btn" id="submit" value="出欠表作成">
-                </form>
-                
-            </div>                
+                </div>
+            </div>
+            <div class="m-2">
+                <input type="submit" class="btn btn-outline-primary" id="submit" value="出欠表作成">
+            </div>
+            
+        </form>
+        <div class="m-2">
+            <button class="btn btn-outline-danger" onclick="location.href='controller/delete_event.php'">削除</button>
+            <button class="btn btn-outline-primary" onclick="location.href='index.php'">戻る</button>
         </div>
     </div>        
 </div>

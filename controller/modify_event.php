@@ -18,6 +18,8 @@ $event_name = $_POST['event_name'];
 $event_dates = $_POST['event_dates'];
 $event_memo = $_POST['event_memo'];
 
+$event_dates = rtrim($event_dates );
+
 //modify event when holding a event id, otherwise create a new event.
 if(isset($_SESSION["event_id"])){
     $event_id = $_SESSION['event_id'];
@@ -30,6 +32,7 @@ if(isset($_SESSION["event_id"])){
     }
 
     if(modify_event($event_id,$event_name,$event_dates,$event_memo) == CODE_SUCCESS){
+        $_SESSION["msg"]="Modify event info in success";
         //redirect to view_event.php?eid=$event_id.php
         $redirect_location="view_modify_event.php?eid=".$event_id;
     }else{

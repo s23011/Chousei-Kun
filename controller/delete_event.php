@@ -10,13 +10,6 @@ if(!isset($_SESSION["event_id"])){
 }
 $event_id = $_SESSION["event_id"];
 
-// //test by get method
-// if(!isset($_GET["eid"])){
-//     http_response_code(405);
-//     exit();
-// }
-// $event_id = $_GET['eid'];
-
 if(get_event_info_from_event_id($event_id) == CODE_ERROR){
     $_SESSION["msg"]=$global_db_msg;
 
