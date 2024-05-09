@@ -2,17 +2,7 @@
 define("CODE_ERROR",1);
 define("CODE_SUCCESS",0);
 
-init_db();
-
-
-function init_db(){
-    $dsn = 'mysql:dbname=chouseikun;host=localhost;charset=utf8;';
-    try{
-        $GLOBALS["pdo"] = new PDO($dsn,'root','kickickic');
-    }catch(PDOException $e){
-        return set_db_msg('Failed to connect to MySQL:'.$e->getMessage());
-    }
-}
+include_once("connection.php");
 
 function get_event_info_from_event_id($event_id){
     if(check_event_id_available($event_id) == CODE_ERROR){ return set_db_msg("Not a available event id:".$event_id);}
