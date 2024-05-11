@@ -41,11 +41,17 @@ if(isset($_GET["eid"])){
     include "template/message.php";
 
     include "template/modify_event.html";
-
-    if(isset($_SESSION["event_id"])){
-        // setup 「戻る」button to link view_event page when modify mode
-    }
     ?>
+    <?php if(isset($_SESSION["event_id"])){?>
+
+        <div class="float-end mx-4 mb-4">
+            <button class="btn btn-outline-danger mx-2" onclick="location.href='controller/delete_event.php'">削除</button>
+            <!-- // setup 「戻る」button to link view_event page when modify mode 
+                //  view_event.php?eid=??? -->
+            <button class="btn btn-outline-primary" onclick="location.href='index.php'">戻る</button>
+        </div>
+    <?php } ;?>
+    
 </body>
 </html>
 

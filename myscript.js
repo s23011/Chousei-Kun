@@ -14,7 +14,7 @@ function get_event_info(){
         error: function(error) {
             window.console.log("get_event_info error");
             // window.console.log(error);
-            // return_homepage();            
+            return_homepage();            
         }
     });
 }
@@ -40,24 +40,6 @@ function return_homepage(){
         window.location.href = "index.php";
     }
 }
-
-
-
-// get_attendee_info();
-function get_attendee_info(){
-    $.ajax({
-        url: 'controller/check_attendee.php',
-        method: 'POST',
-        dataType: "json",
-        success: function(event_info) {
-            window.console.log(event_info);
-        },
-        error: function(error) {
-            window.console.log(error);
-        }
-    });
-}
-
 
 function setup_msg(msg){
     test();
