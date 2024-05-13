@@ -3,8 +3,16 @@
   include("../model/access_db.php");
 
   #temparely
-  $_SESSION['event_id'] = 0;
-  if(!isset($_SESSION['$isCreator'])){$_SESSION['isCreator'] = False;}
+  $path = $_SERVER['REQUEST_URI'];
+  if(substr($path,-3) == 'php'){
+    $_SESSION['isCreator'] = True;
+    $header_link = '../template/view_modify_attendee.php';
+  }else{
+    $hash_id = substr($path, -20);
+    $_SESSION['isCreator'] = False;
+    $header_link = '../../template/view_modify_attendee.php';
+  }
+  $_SESSION['event_id'] = 0; //need to be change to '=hash_id'
   $_SESSION['view_mode'] = True;
   $_SESSION['modify_event_link'] = "#";
   $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";
@@ -25,9 +33,9 @@
     $_SESSION['attendee_comments'] = $global_attendee_comments;
   }
   if($_SESSION['isCreator']){
-    $title_below = 'あなたが幹事のイベントです。';
+    $title_below = "あなたが幹事のイベントです。";
   }else{
-    $title_below = '「出欠を入力する」ボタンから出欠を入力しましょう。';
+    $title_below = "「出欠を入力する」ボタンから出欠を入力しましょう。";
   }
   $_SESSION['total_atten'] = "解答者数{$global_attendee_num}人、{$title_below}";
 
@@ -39,5 +47,5 @@
   }
   $_SESSION['thistime_attendee_statues'] = $thistime_attendee_statues;
   
-  header( "Location: ../template/view_modify_attendee.php" ); exit;
+  header( "Location: {$header_link}" ); exit;
 ?>

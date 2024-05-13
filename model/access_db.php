@@ -48,6 +48,13 @@ function get_event_info_from_event_id($event_id){
     return CODE_SUCCESS;
 }
 
+function generate_event_id($columnNum){
+    $currentTime = gettimeofday(as_float:true);
+    $combinedStr = strval($columnNum + $currentTime); // (int + float), and convert the reslut to string
+    $hash_id = hash('md5', $combinedStr); // use md5 produce to generate 32bytes hash value
+    $event_id = substr($hash_id, 0, 20); // Intercepting the top 20 bytes
+    return $event_id;
+}
 function create_event($event_name,$event_dates,$event_memo){
     global $pdo;
     $sql = "SELECT count(*) FROM event_info";
