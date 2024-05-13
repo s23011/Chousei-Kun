@@ -4,7 +4,7 @@
 
   #temparely
   $_SESSION['event_id'] = 0;
-  $_SESSION['isCreator'] = True;
+  if(!isset($_SESSION['$isCreator'])){$_SESSION['isCreator'] = False;}
   $_SESSION['view_mode'] = False;
   $_SESSION['modify_event_link'] = "#";
   $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";
@@ -33,7 +33,7 @@
 
   $thistime_attendee_statues = array();
   foreach($global_event_dates as $event_date){
-    if(!get_attendee_status_all_from_event_id_and_event_date($event_id,$event_date)){
+    if(!get_attendee_status_from_event_id_and_event_date($event_id,$event_date)){
       $thistime_attendee_statues[$event_date] = $global_attendee_statues;
     }
   }

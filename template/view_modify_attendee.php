@@ -10,6 +10,21 @@
             default: return $circle;
         }
     }
+
+    $_SESSION['event_id'];
+    $event_title = $_SESSION[ 'title' ];
+    $isCreator = $_SESSION[ 'isCreator' ];
+    $link1 = $_SESSION[ 'modify_event_link' ];
+    $total_atten = $_SESSION[ 'total_atten' ];
+    $memo = $_SESSION[ 'memo' ];
+    $view_mode = $_SESSION['view_mode'];
+    $link2 = $_SESSION['create_attendee_link'];
+    $attendee_names = $_SESSION['attendee_names'];
+    $event_dates = $_SESSION['event_dates'];
+    $thistime_attendee_statues = $_SESSION['thistime_attendee_statues'];
+    $modify_attendee_name = $_SESSION['attName']; 
+    $attendee_comments = $_SESSION['attendee_comments'];
+    $form_action = $_SESSION['form_action'];
 ?>
 <!doctype html>
 <html lang="ja">
@@ -25,22 +40,6 @@
     </head>
 
     <body>
-        <?php
-            $_SESSION['event_id'];
-            $event_title = $_SESSION[ 'title' ];
-            $isCreator = $_SESSION[ 'isCreator' ];
-            $link1 = $_SESSION[ 'modify_event_link' ];
-            $total_atten = $_SESSION[ 'total_atten' ];
-            $memo = $_SESSION[ 'memo' ];
-            $view_mode = $_SESSION['view_mode'];
-            $link2 = $_SESSION['create_attendee_link'];
-            $attendee_names = $_SESSION['attendee_names'];
-            $event_dates = $_SESSION['event_dates'];
-            $thistime_attendee_statues = $_SESSION['thistime_attendee_statues'];
-            $modify_attendee_name = $_SESSION['attName']; 
-            $attendee_comments = $_SESSION['attendee_comments'];
-            $form_action = $_SESSION['form_action'];
-        ?>
         <div class="container">
             <!-- title part -->
             <br>

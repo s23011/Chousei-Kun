@@ -4,6 +4,16 @@ define("CODE_SUCCESS",0);
 
 include_once("connection.php");
 
+init_db();
+function init_db(){
+    $dsn = 'mysql:dbname=chouseikun;host=localhost;charset=utf8;';
+    try{
+        $GLOBALS["pdo"] = new PDO($dsn,'root','6251');
+    }catch(PDOException $e){
+        return set_db_msg('Failed to connect to MySQL:'.$e->getMessage());
+    }
+}
+
 function get_event_info_from_event_id($event_id){
     if(check_event_id_available($event_id) == CODE_ERROR){ return set_db_msg("Not a available event id:".$event_id);}
     
@@ -11,7 +21,7 @@ function get_event_info_from_event_id($event_id){
 
     $sql = "SELECT * FROM event_info WHERE event_id = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($event_id,));
+    $q->execute(array($event_id));
 
     $row = $q->fetch();
 
@@ -149,7 +159,7 @@ function get_attendee_statuses_from_event_id_and_attendee_name($event_id,$attend
         $global_attendee_statuses[] = $row["status"];
     }
 
-    return CODE_SUCCESS0;
+    return CODE_SUCCESS;
 }
 
 function create_attendee_info($event_id,$attendee_name,$attendee_comment){
