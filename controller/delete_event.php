@@ -11,19 +11,17 @@ if(!isset($_SESSION["event_id"])){
 $event_id = $_SESSION["event_id"];
 
 if(get_event_info_from_event_id($event_id) == CODE_ERROR){
-    $_SESSION["msg"]=$global_db_msg;
 
     header("Location: ../index.php");
     exit();
 }
 
 if(delete_event_from_event_id($event_id) == CODE_SUCCESS){
-    $_SESSION["msg"]="delete event success.eid=".$event_id;
+    add_msg("Delete event in success.(eid=".$event_id.")",CODE_SUCCESS);
 
     header("Location: ../index.php");
     exit();
 }else{
-    $_SESSION["msg"]=$global_db_msg;
 
     header("Location: ../view_modify_event.php?eid=".$event_id);
     exit();

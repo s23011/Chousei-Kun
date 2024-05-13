@@ -9,13 +9,13 @@
                     <div class="mx-2">
                         <label for="name" class=""><h4>イベント名</h4></label><br>
                         ※忘年会、打ち合わせなど<br>
-                        <input type="text" name="event_name" id="name" value="" class="form-control" required><br>
+                        <input type="text" name="event_name" id="name" value="" class="form-control" maxlength="100" required><br>
                     </div>
     
                     <div class="mx-2">
                         <label for="memo"><h4>メモ</h4></label><br>
                         ※飲み会の日程調整しましょう！<br>
-                        <textarea name="event_memo" id="memo" value="" class="form-control" rows="5"></textarea><br>
+                        <textarea name="event_memo" id="memo" value="" class="form-control" rows="5" maxlength="300"></textarea><br>
                     </div>
                 </div>
 
@@ -32,7 +32,7 @@
                         　8/9(水) 21:00<br>
                         <br>
                         <div>
-                            <textarea name="event_dates" id="dates" class="form-control" rows="5" required></textarea><br>
+                            <textarea name="event_dates" id="dates" class="form-control" rows="5" maxlength="300" required></textarea><br>
                         </div>
                     </div>
 

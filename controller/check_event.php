@@ -14,7 +14,9 @@ if(isset($_SESSION["event_id"])){
 
         echo json_encode($event_info); 
     }else{
-        echo json_encode($global_db_msg); 
+        if(isset($_SESSION["msg_info_list"])){echo json_encode($_SESSION["msg_info_list"]);}
+        if(isset($_SESSION["msg_error_list"])){echo json_encode($_SESSION["msg_error_list"]);}
+
         http_response_code(400);
     }
 
