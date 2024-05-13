@@ -350,5 +350,11 @@ function check_int_length($number,$length){
     return CODE_SUCCESS;
 }
 
+function set_db_msg($msg,$error_code = 1){
+    global $global_db_msg;
+    $global_db_msg = $msg;
+
+    return $error_code;
+}
 
 ?>
