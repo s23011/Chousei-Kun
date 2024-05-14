@@ -14,7 +14,7 @@
   }
 
   $_SESSION['view_mode'] = True;
-  $_SESSION['modify_event_link'] = "#";
+  $_SESSION['modify_event_link'] = "../view_modify_event.php";
   $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";
   $_SESSION['attName'] = '';
   $_SESSION['form_action'] = '../controller/post_form.php';
