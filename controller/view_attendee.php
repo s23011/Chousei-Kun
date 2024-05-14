@@ -4,15 +4,15 @@
 
   #temparely
   $path = $_SERVER['REQUEST_URI'];
-  if(substr($path,-4) == '.php'){
+  if(isset($_COOKIE['event_id'])){
     $_SESSION['isCreator'] = True;
-    $header_link = '../template/view_modify_attendee.php';
+    $_SESSION['event_id'] = $_COOKIE['event_id'];
   }else{
     $hash_id = substr($path, -20);
     $_SESSION['isCreator'] = False;
-    $header_link = '../../template/view_modify_attendee.php';
+    $_SESSION['event_id'] = $hash_id;
   }
-  //$_SESSION['event_id'] = 0; //need to be change to '=hash_id'
+
   $_SESSION['view_mode'] = True;
   $_SESSION['modify_event_link'] = "#";
   $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";
@@ -47,5 +47,5 @@
   }
   $_SESSION['thistime_attendee_statues'] = $thistime_attendee_statues;
   
-  header( "Location: {$header_link}" ); exit;
+  header( "Location: ../../template/view_modify_attendee.php" ); exit;
 ?>
