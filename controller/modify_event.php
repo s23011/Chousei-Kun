@@ -33,7 +33,9 @@ if(isset($_SESSION["event_id"])){
     if(modify_event($event_id,$event_name,$event_dates,$event_memo) == CODE_SUCCESS){
         add_msg("Modify event info in success.",CODE_SUCCESS);
         //redirect to view_event.php?eid=$event_id.php
-        $redirect_location="view_modify_event.php?eid=".$event_id;
+        // $redirect_location="view_modify_event.php?eid=".$event_id;
+        $_SESSION["event_id"] = $global_event_id;
+        $redirect_location="view_url";
     }else{
         //redirect to view_modify_event.php
         $redirect_location="view_modify_event.php?eid=".$event_id;

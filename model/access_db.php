@@ -19,7 +19,7 @@ function get_event_info_from_event_id($event_id){
     $row = $q->fetch();
 
     if(!$row){
-        add_msg("The event do not exist.");
+        add_msg("The event do not exist.(".$event_id.")");
         return CODE_ERROR;
     }
 
@@ -335,9 +335,10 @@ function decode_spchar($txt){
 }
 
 function check_event_id_available($event_id){
-    if(!is_int((int)$event_id)){return CODE_ERROR;} //when event id only a integer value
-
-    return check_int_length($event_id,1);
+    // if(!is_int((int)$event_id)){return CODE_ERROR;} //when event id only a integer value
+    return CODE_SUCCESS;
+    // return check_txt_limit_length($event_id,20);
+    // return check_int_length($event_id,1);
 }
 
 function check_int_length($number,$length){

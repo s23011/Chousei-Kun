@@ -1,7 +1,10 @@
 <?php
     session_start();
-    $event_id = $_SESSION['event_id'];
+    // $event_id = $_SESSION['event_id'];
     $server_path = "localhost/sofwa_dev_prac/chouseikun/controller/view_attendee.php/";
+    $event_id = $_GET['event_id'];
+    $_SESSION['event_id'] =  $event_id;
+    // $server_path = "localhost/sofwa_dev_prac/chouseikun/controller/view_attendee.php/";
     $event_url = $server_path.$event_id;
     $_SESSION['isCreator'] = True;
 ?>
@@ -42,7 +45,7 @@
                 </script>
             </div>
             <div class="container-fluid text-center mt-3 mb-3">
-                <a class="btn btn-primary" href="./controller/view_attendee.php" role="button">イベントページを表示</a>
+                <a class="btn btn-primary" href="./controller/view_attendee.php/<?php echo $event_id; ?>" role="button">イベントページを表示</a>
             </div>
         </div>
     </body>
