@@ -4,7 +4,7 @@
 
   #temparely
   $path = $_SERVER['REQUEST_URI'];
-  if(substr($path,-3) == 'php'){
+  if(substr($path,-4) == '.php'){
     $_SESSION['isCreator'] = True;
     $header_link = '../template/view_modify_attendee.php';
   }else{
@@ -12,7 +12,7 @@
     $_SESSION['isCreator'] = False;
     $header_link = '../../template/view_modify_attendee.php';
   }
-  $_SESSION['event_id'] = 0; //need to be change to '=hash_id'
+  //$_SESSION['event_id'] = 0; //need to be change to '=hash_id'
   $_SESSION['view_mode'] = True;
   $_SESSION['modify_event_link'] = "#";
   $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";

@@ -48,11 +48,12 @@ function generate_event_id($columnNum){
 function create_event($event_name,$event_dates,$event_memo){
     global $pdo;
     $sql = "SELECT count(*) FROM event_info";
-    $create_event_id = $pdo->query($sql)->fetchColumn() +1;
+    $columnNum = $pdo->query($sql)->fetchColumn() +1;
     //get row count
     //get time
     //create hash by row count + time,and limit hash length in 20.
     //event id = hash
+    $create_event_id = generate_event_id($columnNum);
 
     if(get_event_info_from_event_id($create_event_id) == CODE_SUCCESS){
         //If id is exist.Maybe return and try again is better than while loop to create new id. 

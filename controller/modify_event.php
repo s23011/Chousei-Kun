@@ -3,7 +3,7 @@ include_once("../model/access_db.php");
 
 session_start();
 
-$redirect_location = "index.php"; // default page
+$redirect_location = "view_url.php"; // default page
 
 if(!isset($_POST["event_name"])
     || !isset($_POST["event_dates"])
@@ -61,6 +61,7 @@ if(isset($_SESSION["event_id"])){
     }
 }
 
+$_SESSION['event_id'] = $global_event_id;
 //default
 //redirect to index
 header("Location: ../".$redirect_location);
