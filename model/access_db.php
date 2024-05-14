@@ -4,16 +4,6 @@ define("CODE_SUCCESS",0);
 
 include_once("connection.php");
 
-init_db();
-function init_db(){
-    $dsn = 'mysql:dbname=chouseikun;host=localhost;charset=utf8;';
-    try{
-        $GLOBALS["pdo"] = new PDO($dsn,'root','6251');
-    }catch(PDOException $e){
-        return set_db_msg('Failed to connect to MySQL:'.$e->getMessage());
-    }
-}
-
 function get_event_info_from_event_id($event_id){
     if(check_event_id_available($event_id) == CODE_ERROR){ 
         add_msg("Not a available event id:".$event_id);
@@ -24,7 +14,7 @@ function get_event_info_from_event_id($event_id){
 
     $sql = "SELECT * FROM event_info WHERE event_id = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($event_id));
+    $q->execute(array($event_id,));
 
     $row = $q->fetch();
 
@@ -47,7 +37,6 @@ function get_event_info_from_event_id($event_id){
 
     return CODE_SUCCESS;
 }
-
 function generate_event_id($columnNum){
     $currentTime = gettimeofday(as_float:true);
     $combinedStr = strval($columnNum + $currentTime); // (int + float), and convert the reslut to string
@@ -55,6 +44,7 @@ function generate_event_id($columnNum){
     $event_id = substr($hash_id, 0, 20); // Intercepting the top 20 bytes
     return $event_id;
 }
+
 function create_event($event_name,$event_dates,$event_memo){
     global $pdo;
     $sql = "SELECT count(*) FROM event_info";
@@ -357,11 +347,5 @@ function check_int_length($number,$length){
     return CODE_SUCCESS;
 }
 
-function set_db_msg($msg,$error_code = 1){
-    global $global_db_msg;
-    $global_db_msg = $msg;
-
-    return $error_code;
-}
 
 ?>
