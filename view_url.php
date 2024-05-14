@@ -1,6 +1,8 @@
 <?php
     session_start();
-    $event_url = $_SESSION['event_url'];
+    $event_id = $_SESSION['event_id'];
+    $server_path = "localhost/sofwa_dev_prac/chouseikun/controller/view_attendee.php/";
+    $event_url = $server_path.$event_id;
     $_SESSION['isCreator'] = True;
 ?>
 
@@ -26,7 +28,7 @@
                 <p>イベントが作成されました。以下のURLをメール等を使って皆に知らせてあげよう。以降、このURLページにて各自の出欠情報を入力してもらいます。</p>
             </div>
             <div class="container-fluid mt-3">
-                <div class="input-group">
+                <div class="input-group d-grid">
                     <input type="text" aria-label="link" value="<?php echo $event_url; ?>" id="copyText">
                     <button class="btn btn-outline-secondary" type="button" onclick="copyTextFunction()">コピー</button>
                 </div>
