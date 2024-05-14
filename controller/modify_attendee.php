@@ -8,6 +8,7 @@
   # view part
   $event_id = $_SESSION['event_id'];
   $global_event_dates = $_SESSION['event_dates'];
+  $_SESSION['form_action'] = '../controller/post_form_modify.php';
 
   $thistime_attendee_statues = array();
   foreach($global_event_dates as $event_date){
