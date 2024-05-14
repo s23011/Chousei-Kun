@@ -1,10 +1,8 @@
 <?php
     session_start();
-    // $event_id = $_SESSION['event_id'];
-    $server_path = "localhost/sofwa_dev_prac/chouseikun/controller/view_attendee.php/";
+    $server_path = "localhost/chouseikun/controller/view_attendee.php/";
     $event_id = $_GET['event_id'];
     $_SESSION['event_id'] =  $event_id;
-    // $server_path = "localhost/sofwa_dev_prac/chouseikun/controller/view_attendee.php/";
     $event_url = $server_path.$event_id;
     $_SESSION['isCreator'] = True;
 ?>

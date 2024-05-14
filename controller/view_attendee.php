@@ -47,5 +47,5 @@
   }
   $_SESSION['thistime_attendee_statues'] = $thistime_attendee_statues;
   
-  header( "Location: ../template/view_modify_attendee.php" ); exit;
+  header( "Location: ../../template/view_modify_attendee.php" ); exit;
 ?>

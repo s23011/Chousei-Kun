@@ -306,15 +306,6 @@ function get_attendee_status_from_event_id_and_event_date($event_id,$date){
     return CODE_SUCCESS;
 }
 
-function add_msg($msg,$error_code = CODE_ERROR){
-    if($error_code == CODE_SUCCESS){
-        $_SESSION['msg_info_list'][]=$msg;
-    }else if($error_code == CODE_ERROR){
-        $_SESSION['msg_error_list'][]=$msg;
-    }    
-}
-
-
 //count of text length is unexpected number now
 function check_txt_limit_length($txt,$limit_length){
     $txt_length = strlen($txt);
