@@ -2,9 +2,13 @@
 session_start();
 
 if(isset($_GET["eid"])){
-    $_SESSION["event_id"]=$_GET["eid"];
+    $_SESSION["event_id"] = $_GET["eid"];
+
+    $return_path = "view_event.php?eid=".$_SESSION["event_id"];
 }else{
     unset($_SESSION["event_id"]);
+
+    $return_path = "index.php";
 }
 ?>
 
@@ -14,12 +18,11 @@ if(isset($_GET["eid"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        調整くん
         <?php
             if(isset($_SESSION["event_id"])){
-                echo "：イベント編集";
+                echo "イベント編集";
             }else{
-                echo "：イベント作成";
+                echo "イベント作成";
             }
         ?>
     </title>
@@ -42,15 +45,13 @@ if(isset($_GET["eid"])){
 
     include "template/modify_event.html";
     ?>
-    <?php if(isset($_SESSION["event_id"])){?>
+    <?php if(isset($_SESSION["event_id"])):?>
 
         <div class="float-end mx-4 mb-4">
             <button class="btn btn-outline-danger mx-2" onclick="location.href='controller/delete_event.php'">削除</button>
-            <!-- // setup 「戻る」button to link view_event page when modify mode 
-                //  view_event.php?eid=??? -->
-            <button class="btn btn-outline-primary" onclick="location.href='index.php'">戻る</button>
+            <button class="btn btn-outline-primary" onclick="location.href='<?php echo $return_path ?>'">戻る</button>
         </div>
-    <?php } ;?>
+    <?php endif; ?>
     
 </body>
 </html>
