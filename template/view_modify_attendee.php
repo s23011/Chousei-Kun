@@ -1,5 +1,4 @@
 <?php 
-    session_start();
     function show_mark($status){
         $cross = "✕";
         $tangle = "△";
@@ -10,7 +9,28 @@
             default: return $circle;
         }
     }
-    $_SESSION['event_id'];
+
+    if(!isset($_GET["eid"])){
+        header("Location: ../index.php");
+        exit();
+    }
+    $event_id = $_GET['eid'];
+
+    session_start();
+
+    if(!isset($_SESSION['event_info'])){
+        $_SESSION['event_id'] = $event_id;
+        header("Location: controller/view_attendee.php");
+        exit();
+    }
+
+    if(isset($_COOKIE['event_id'])){
+        $_SESSION['isCreator'] = True;
+    }
+
+    print_r($_SESSION['event_info']);
+    unset($_SESSION['event_info']); //testing
+
     $event_title = $_SESSION[ 'title' ];
     $isCreator = $_SESSION[ 'isCreator' ];
     $link1 = $_SESSION[ 'modify_event_link' ];
@@ -25,8 +45,9 @@
     $attendee_comments = $_SESSION['attendee_comments'];
     $form_action = $_SESSION['form_action'];
 
-    $event_id = $_GET['eid'];
+    
     $isCreator = True;
+    $attendee_num = count($attendee_names);
 ?>
 
 <div class="container">
@@ -45,7 +66,15 @@
             <?php endif ?>
         </div>
         <div>
-            <p class="text-start pt-1 fs-5"><?php echo $total_atten; ?></p> 
+            <p class="text-start pt-1 fs-5">
+                <?php 
+                  if($isCreator){
+                    echo "解答者数{$attendee_num}人、 あなたがイベントの幹事です。";
+                  }else{
+                    echo "解答者数{$attendee_num}人、 「出欠を入力する」ボタンから出欠を入力しましょう。";
+                  }
+                ?>
+            </p> 
         </div>
     </div>
     

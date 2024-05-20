@@ -1,7 +1,3 @@
-<?php 
-// include("controller/view_attendee.php");
-?>
-
 <!doctype html>
 <html lang="ja">
     <head>
