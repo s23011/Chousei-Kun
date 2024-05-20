@@ -16,8 +16,6 @@
     }
     $event_id = $_GET['eid'];
 
-    session_start();
-
     if(!isset($_SESSION['event_info'])){
         $_SESSION['event_id'] = $event_id;
         header("Location: controller/view_attendee.php");
@@ -26,14 +24,22 @@
 
     if(isset($_COOKIE['event_id'])){
         $_SESSION['isCreator'] = True;
+    }else{
+        $_SESSION['isCreator'] = False;
     }
 
     $event_name = $_SESSION['event_info']['event_name'];
     $event_memo = $_SESSION['event_info']['memo'];
     $event_dates = $_SESSION['event_info']['event_dates'];
 
-    $attendee_names = $_SESSION['attendee_info_list']['attendee_names'];
-    $attendee_comments = $_SESSION['attendee_info_list']['attendee_comments'];
+    if(!empty($_SESSION['attendee_info_list'])){
+        $attendee_names = $_SESSION['attendee_info_list']['attendee_names'];
+        $attendee_comments = $_SESSION['attendee_info_list']['attendee_comments'];
+        $attendee_num = count($attendee_names);
+        $thistime_attendee_statues = $_SESSION['thistime_attendee_statues'];
+    }else{
+        $attendee_num = 0;
+    }
 
     // print_r($_SESSION['event_info']);
     // unset($_SESSION['event_info']); //testing
@@ -41,23 +47,23 @@
     // unset($_SESSION['attendee_status_list']); //testing
 
 
-
-
-
     $isCreator = $_SESSION[ 'isCreator' ];
-
     $view_mode = $_SESSION['view_mode'];
-    $thistime_attendee_statues = $_SESSION['thistime_attendee_statues'];
 
     //for form
     $form_action = $_SESSION['form_action'];
-    $modifying_attendee_name = $_SESSION['modifying_attendee_name']; 
-    $modifying_attendee_index = array_search($modifying_attendee_name ,$attendee_names); // return int for index,or FALSE when failed
+    if(empty($_SESSION['modifying_attendee_name'])){
+        $modifying_attendee_name = NULL;
+        $modifying_attendee_index = false;
+    }else{
+        $modifying_attendee_name = $_SESSION['modifying_attendee_name']; 
+        $modifying_attendee_index = array_search($modifying_attendee_name ,$attendee_names); // return int for index,or FALSE when failed
 
+    }
 
     
-    $isCreator = True;
-    $attendee_num = count($attendee_names);
+    $isCreator = True; // need to be delete
+    
 ?>
 
 <div class="container">
@@ -113,13 +119,15 @@
                     <th scope="col">◎</th>
                     <th scope="col">△</th>
                     <th scope="col">✕</th>
-                    <?php foreach ($attendee_names as $attendee_name): ?>
-                        <th scope="col">
-                        <a class="btny" href="controller/modify_attendee.php?attendee_name=<?php echo urlencode($attendee_name); ?>" role="button">
-                            <?php echo $attendee_name; ?>
-                        </a>
-                        </th>
-                    <?php endforeach; ?>
+                    <?php if(isset($attendee_names)): ?>
+                        <?php foreach ($attendee_names as $attendee_name): ?>
+                            <th scope="col">
+                            <a class="btny" href="controller/modify_attendee.php?attendee_name=<?php echo urlencode($attendee_name); ?>" role="button">
+                                <?php echo $attendee_name; ?>
+                            </a>
+                            </th>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -130,12 +138,14 @@
                         $cross_num = 0;
                         $tangle_num = 0;
                         $circle_num = 0;
-                        foreach ($thistime_attendee_statues[$date] as $status) {
-                            switch ($status) {
-                                case 0: $cross_num++; break;
-                                case 1: $tangle_num++; break;
-                                case 2: $circle_num++; break;
-                                default: break;
+                        if(isset($thistime_attendee_statues)){
+                            foreach ($thistime_attendee_statues[$date] as $status) {
+                                switch ($status) {
+                                    case 0: $cross_num++; break;
+                                    case 1: $tangle_num++; break;
+                                    case 2: $circle_num++; break;
+                                    default: break;
+                                }
                             }
                         }
                     ?>
@@ -143,12 +153,14 @@
                     <td><?php echo $tangle_num; ?></td>
                     <td><?php echo $cross_num; ?></td>
                     <?php 
-                        foreach ($attendee_names as $attendee_name){
-                            if(array_key_exists($attendee_name,$thistime_attendee_statues[$date])){
-                                $mark = show_mark($thistime_attendee_statues[$date][$attendee_name]);
-                                echo "<td>".$mark."</td>";
-                            }else{
-                                echo "<td></td>";
+                        if(isset($attendee_names)){
+                            foreach ($attendee_names as $attendee_name){
+                                if(array_key_exists($attendee_name,$thistime_attendee_statues[$date])){
+                                    $mark = show_mark($thistime_attendee_statues[$date][$attendee_name]);
+                                    echo "<td>".$mark."</td>";
+                                }else{
+                                    echo "<td></td>";
+                                }
                             }
                         }
                     ?>
@@ -161,9 +173,11 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <?php foreach ($attendee_comments as $comment): ?>
-                        <td><?php echo $comment; ?></td>
-                    <?php endforeach; ?>
+                    <?php if(isset($attendee_comments)): ?>
+                        <?php foreach ($attendee_comments as $comment): ?>
+                            <td><?php echo $comment; ?></td>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tr>
             </tbody>
         </table>
