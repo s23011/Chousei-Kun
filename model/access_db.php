@@ -139,8 +139,7 @@ function get_attendee_info_from_event_id($event_id){
     $q->execute(array($event_id));
 
     $rows = $q->fetchAll();
-    global $global_attendee_num;
-    $global_attendee_num = 0;
+
     if(empty($rows)){
         return CODE_ERROR;
     }
@@ -148,9 +147,11 @@ function get_attendee_info_from_event_id($event_id){
     global $global_attendee_names, $global_attendee_comments;
 
     foreach($rows as $row){
-        $global_attendee_num++;
-        $global_attendee_names[] = $row['attendee_name'];
-        $global_attendee_comments[] = $row['comment'];
+        $attendee_name = decode_spchar($row['attendee_name']);
+        $attendee_comment = decode_spchar($row['comment']);
+
+        $global_attendee_names[] = $attendee_name;
+        $global_attendee_comments[] = $attendee_comment;
     }
 
     return CODE_SUCCESS;
@@ -158,6 +159,8 @@ function get_attendee_info_from_event_id($event_id){
 
 function get_attendee_statuses_from_event_id_and_attendee_name($event_id,$attendee_name){
     global $pdo;
+
+    $attendee_name = encode_spchar($attendee_name);
 
     $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND attendee_name = ?";
     $q = $pdo->prepare($sql);
@@ -172,7 +175,9 @@ function get_attendee_statuses_from_event_id_and_attendee_name($event_id,$attend
 
     global $global_attendee_dates,$global_attendee_statuses;
     foreach($rows as $row){
-        $global_attendee_dates[] = $row["date"];
+        $date = decode_spchar($row["date"]);
+
+        $global_attendee_dates[] = $date;
         $global_attendee_statuses[] = $row["status"];
     }
 
@@ -181,6 +186,9 @@ function get_attendee_statuses_from_event_id_and_attendee_name($event_id,$attend
 
 function create_attendee_info($event_id,$attendee_name,$attendee_comment){
     global $pdo;
+
+    $attendee_name = encode_spchar($attendee_name);
+    $attendee_comment = encode_spchar($attendee_comment);
 
     $sql = "SELECT * FROM attendee_info WHERE event_id = ? AND attendee_name = ?";
     $q = $pdo->prepare($sql);
@@ -208,6 +216,8 @@ function create_attendee_info($event_id,$attendee_name,$attendee_comment){
 function create_attendee_status($event_id,$attendee_name,$date,$status){
     global $pdo;
 
+    $attendee_name = encode_spchar($attendee_name);
+
     $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND attendee_name = ? AND date = ?";
     $q = $pdo->prepare($sql);
     $q->execute(array($event_id,$attendee_name,$date));
@@ -232,6 +242,10 @@ function create_attendee_status($event_id,$attendee_name,$date,$status){
 
 function modify_attendee_info_from_event_id_and_attendee_name($event_id,$attendee_name,$new_name,$new_comment){
     global $pdo;
+
+    $attendee_name = encode_spchar($attendee_name);
+    $new_name = encode_spchar($new_name);
+    $new_comment = encode_spchar($new_comment);
 
     $sql = "SELECT * FROM attendee_info WHERE event_id = ? AND attendee_name = ?";
     $q = $pdo->prepare($sql);
@@ -258,6 +272,10 @@ function modify_attendee_info_from_event_id_and_attendee_name($event_id,$attende
 
 function modify_attendee_status_from_event_id_and_attendee_name($event_id,$attendee_name,$new_name,$new_date,$new_status){
     global $pdo;
+
+    $attendee_name = encode_spchar($attendee_name);
+    $new_name = encode_spchar($new_name);
+    $new_date = encode_spchar($new_date);
 
     $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND attendee_name = ?";
     $q = $pdo->prepare($sql);
@@ -300,6 +318,31 @@ function get_attendee_status_from_event_id_and_event_date($event_id,$date){
     $global_attendee_statues = null;
     foreach($rows as $row){
         $global_attendee_statues[] = $row["status"];
+    }
+
+    return CODE_SUCCESS;
+}
+
+//new
+function get_attendee_status_all_from_event_id_and_event_date($event_id,$date){
+    global $pdo;
+
+    $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND date = ?";
+    $q = $pdo->prepare($sql);
+    $q->execute(array($event_id,$date));
+
+    $rows = $q->fetchAll();
+
+    if(!$rows){
+        add_msg("Get attendee info do not exist.". json_encode($date));
+        return CODE_ERROR;
+    }
+
+    global $global_attendee_statues;
+    $global_attendee_statues = null;
+    foreach($rows as $row){
+        $attendee_name = decode_spchar($row["attendee_name"]);
+        $global_attendee_statues[$attendee_name] = $row["status"];
     }
 
     return CODE_SUCCESS;

@@ -16,6 +16,8 @@
     <body class="container-fluid">
 
         <?php 
+        session_start();
+        
         include "template/navbar.html";
 
         include "template/message.php";

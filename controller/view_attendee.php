@@ -15,10 +15,10 @@
   
 
   $_SESSION['view_mode'] = True;
-  $_SESSION['modify_event_link'] = "../view_modify_event.php";
-  $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";
+  // $_SESSION['modify_event_link'] = "../view_modify_event.php";
+  // $_SESSION['create_attendee_link'] = "../controller/create_attendee.php";
   $_SESSION['attName'] = '';
-  $_SESSION['form_action'] = '../controller/post_form.php';
+  $_SESSION['form_action'] = 'post_form.php';
 
   #permently part
   $event_id = $_SESSION['event_id'];
@@ -36,21 +36,42 @@
     $_SESSION['attendee_num'] = $global_attendee_num;
     $_SESSION['attendee_names'] = $global_attendee_names;
     $_SESSION['attendee_comments'] = $global_attendee_comments;
+
+    $_SESSION['attendee_info_list']['attendee_names'] =  $global_attendee_names;
+    $_SESSION['attendee_info_list']['attendee_comments'] =  $global_attendee_comments;
   }
-  if($_SESSION['isCreator']){
-    $title_below = "あなたが幹事のイベントです。";
-  }else{
-    $title_below = "「出欠を入力する」ボタンから出欠を入力しましょう。";
-  }
-  $_SESSION['total_atten'] = "解答者数{$global_attendee_num}人、{$title_below}";
+  // if($_SESSION['isCreator']){
+  //   $title_below = "あなたが幹事のイベントです。";
+  // }else{
+  //   $title_below = "「出欠を入力する」ボタンから出欠を入力しましょう。";
+  // }
+  // $_SESSION['total_atten'] = "解答者数{$global_attendee_num}人、{$title_below}";
 
   $thistime_attendee_statues = array();
   foreach($global_event_dates as $event_date){
-    if(get_attendee_status_from_event_id_and_event_date($event_id,$event_date) == CODE_SUCCESS){
+    // if(get_attendee_status_from_event_id_and_event_date($event_id,$event_date) == CODE_SUCCESS){
+    //   $thistime_attendee_statues[$event_date] = $global_attendee_statues;
+
+    //   $_SESSION['attendee_status_list'][$event_date] =  $global_attendee_statues;
+    // }else{
+    //   $thistime_attendee_statues[$event_date] = array();
+
+    //   $_SESSION['attendee_status_list'][$event_date] = array();
+    // }
+
+    if(get_attendee_status_all_from_event_id_and_event_date($event_id,$event_date) == CODE_SUCCESS){
       $thistime_attendee_statues[$event_date] = $global_attendee_statues;
+
+      $_SESSION['attendee_status_list'][$event_date] =  $global_attendee_statues;
+    }else{
+      add_msg("(test)attendee status not exist:".json_encode($event_date));
+      $thistime_attendee_statues[$event_date] = array();
+      $_SESSION['attendee_status_list'][$event_date] = array();
     }
   }
   $_SESSION['thistime_attendee_statues'] = $thistime_attendee_statues;
+
+
 
 
 
