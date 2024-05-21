@@ -140,27 +140,44 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($event_dates as $date): ?>
-                <tr>
-                    <td><?php echo $date; ?></td>
-                    <?php
-                        $cross_num = 0;
-                        $tangle_num = 0;
-                        $circle_num = 0;
+                <?php
+                    $cross_num = [];
+                    $tangle_num = [];
+                    $circle_num = [];
+                    foreach ($event_dates as $date){
+                        $cross_num[$date] = 0;
+                        $tangle_num[$date] = 0;
+                        $circle_num[$date] = 0;
                         if($attendee_num > 0){
                             foreach ($attendee_status_list[$date] as $status) {
                                 switch ($status) {
-                                    case 0: $cross_num++; break;
-                                    case 1: $tangle_num++; break;
-                                    case 2: $circle_num++; break;
+                                    case 0: $cross_num[$date]++; break;
+                                    case 1: $tangle_num[$date]++; break;
+                                    case 2: $circle_num[$date]++; break;
                                     default: break;
                                 }
                             }
                         }
-                    ?>
-                    <td><?php echo $circle_num; ?></td>
-                    <td><?php echo $tangle_num; ?></td>
-                    <td><?php echo $cross_num; ?></td>
+                    }
+                    unset($dates_of_max_circle);
+                    $dates_of_max_circle = array_keys($circle_num,max($circle_num));
+                    $tangle_of_max_circle = [];
+                    if(count($dates_of_max_circle) != 1){
+                        foreach($dates_of_max_circle as $date_of_circle){
+                            $tangle_of_max_circle[$date_of_circle] = $tangle_num[$date_of_circle]; 
+                        }
+                        $highlight_dates = array_keys($tangle_of_max_circle, max($tangle_of_max_circle));
+                    }else{
+                        $highlight_dates = $dates_of_max_circle;
+                    }
+                    print_r($highlight_dates);
+                ?>
+                <?php foreach ($event_dates as $date): ?>
+                <tr <?php if(array_search($date, $highlight_dates)!==false){echo 'class="table-active"';} ?>>
+                    <td><?php echo $date; ?></td>
+                    <td><?php echo $circle_num[$date]; ?></td>
+                    <td><?php echo $tangle_num[$date]; ?></td>
+                    <td><?php echo $cross_num[$date]; ?></td>
                     <?php 
                         if($attendee_num > 0){
                             foreach ($attendee_names as $attendee_name){
