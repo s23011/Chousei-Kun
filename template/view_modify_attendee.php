@@ -51,8 +51,6 @@
     }else{
         $attendee_num = 0;
     }
-    
-    print_r($_SESSION['attendee_status_list']);
 
     //for creator
     $isCreator = false;
