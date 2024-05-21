@@ -16,9 +16,9 @@
 
             }
         }
-        add_msg("出欠情報が作成した。",CODE_SUCCESS);
+        add_msg("出欠情報の作成は成功した。",CODE_SUCCESS);
     }else{
-        add_msg("出欠情報が作成できなかった。");
+        add_msg("出欠情報の作成は失敗した。");
     }
 
     header( "Location: ../controller/view_attendee.php" ); exit;

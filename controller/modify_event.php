@@ -30,18 +30,18 @@ if(isset($_SESSION["event_id"])){
     }
 
     if(modify_event($event_id,$event_name,$event_dates,$event_memo) == CODE_SUCCESS){
-        add_msg("イベントが編集できた。",CODE_SUCCESS);
+        add_msg("イベントの編集が成功した。",CODE_SUCCESS);
 
         //redirect to view event page
         $redirect_location="view_event.php?eid=".$event_id;
     }else{
-        add_msg("イベントが編集できなかった。");
+        add_msg("イベントの編集が失敗した。");
         //return modify event page
         $redirect_location="view_modify_event.php?eid=".$event_id;
     }
 }else{     
     if(create_event($event_name,$event_dates,$event_memo) == CODE_SUCCESS){
-        add_msg("イベントが作成できた。",CODE_SUCCESS);
+        add_msg("イベントの作成は成功した。",CODE_SUCCESS);
 
         //unset data in session when success
         unset($_SESSION["event_name"]);
@@ -62,7 +62,7 @@ if(isset($_SESSION["event_id"])){
         //redirect to view url page
         $redirect_location = "view_url.php?eid=".$global_event_id;
     }else{
-        add_msg("イベントが作成できなかった。もう一度試してみてください。");
+        add_msg("イベントの作成は失敗した。もう一度試してみてください。");
         //keep data in session until success
         //if have any problem, return back and setup form fields by read session in check_event.php 
         $_SESSION["event_name"]=$event_name;

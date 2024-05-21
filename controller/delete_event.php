@@ -41,7 +41,7 @@ if(delete_event_from_event_id($event_id) == CODE_SUCCESS){
     header("Location: ../index.php");
     exit();
 }else{
-    add_msg("イベントが削除できなかった。");
+    add_msg("イベントの削除は失敗した。");
 
     header("Location: ../view_modify_event.php?eid=".$event_id);
     exit();

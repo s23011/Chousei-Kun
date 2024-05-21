@@ -15,20 +15,17 @@ if(isset($_GET['eid'])){//modify mode
     
     //check cookie
     if(!isset($_COOKIE['creator_event_id_list'])){
-        $_SESSION['msg_error_list'][]="あなたが編集の権限がないです。";
+        $_SESSION['msg_error_list'][]="あなたは編集の権限を持ってない。";
         header("Location: view_event.php?eid=".$event_id);
         exit();
     }
 
     $event_id_list = json_decode($_COOKIE['creator_event_id_list'],true);
     if(!in_array($event_id,$event_id_list)){
-        $_SESSION['msg_error_list'][]="あなたが編集の権限がないです。";
+        $_SESSION['msg_error_list'][]="あなたは編集の権限を持ってない。";
         header("Location: view_event.php?eid=".$event_id);
         exit();
     }
-
-    print_r($_COOKIE);
-
     $_SESSION["event_id"] = $event_id;
 
     $return_path = "view_event.php?eid=".$event_id;

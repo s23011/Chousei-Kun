@@ -4,11 +4,7 @@ define("CODE_SUCCESS",0);
 
 include_once("connection.php");
 
-function get_event_info_from_event_id($event_id){
-    if(check_event_id_available($event_id) == CODE_ERROR){ 
-        return CODE_ERROR;
-    }
-    
+function get_event_info_from_event_id($event_id){    
     global $pdo;
 
     $sql = "SELECT * FROM event_info WHERE event_id = ?";
@@ -25,7 +21,8 @@ function get_event_info_from_event_id($event_id){
     $event_dates = decode_spchar($row["dates"]);
     $event_memo = decode_spchar($row["memo"]);
 
-    $event_dates = preg_split("/\r\n|\n|\r/", $row["dates"]); //split string by newline for mutiple os
+    $event_dates = preg_split("/\r\n|\n|\r/", $row["dates"]); //Split string by newline for mutiple os
+    $event_dates = array_unique($event_dates);  //Check the event_dates has any duplicate dates.
 
     global $global_event_name,$global_event_dates,$global_event_memo;
 
