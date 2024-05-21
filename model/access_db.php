@@ -277,20 +277,21 @@ function modify_attendee_status_from_event_id_and_attendee_name($event_id,$atten
     $new_name = encode_spchar($new_name);
     $new_date = encode_spchar($new_date);
 
-    $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND attendee_name = ?";
+    $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND attendee_name = ? AND date = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($event_id,$attendee_name));
+    $q->execute(array($event_id,$attendee_name,$new_date));
 
     $row = $q->fetch();
 
     if(!$row){
-        add_msg("The attendee status do not exist.");
-        return CODE_ERROR;
+        $sql = "INSERT INTO attendee_status VALUES (?,?,?,?)";
+        $q = $pdo->prepare($sql);
+        $q->execute(array($event_id,$attendee_name,$new_date,$new_status));
+    }else{
+        $sql = "UPDATE attendee_status SET attendee_name = ? , status = ? WHERE event_id = ? AND attendee_name = ? AND date = ?";
+        $q = $pdo->prepare($sql);
+        $q->execute(array($new_name,$new_status,$event_id,$attendee_name,$new_date));
     }
-
-    $sql = "UPDATE attendee_status SET attendee_name = ?,date = ?,status = ? WHERE event_id = ? AND attendee_name = ?";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($new_name,$new_date,$new_status,$event_id,$attendee_name,));
 
     if(!$q){
         add_msg("Modify attendee status in error.");
