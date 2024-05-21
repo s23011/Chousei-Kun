@@ -213,11 +213,13 @@
                                 if($modifying_attendee_index !== FALSE
                                     && array_key_exists($modifying_attendee_name,$attendee_status_list[$date])){
                                     $modifying_status = $attendee_status_list[$date][$modifying_attendee_name];
+                                }else{
+                                    $modifying_status = 2;
                                 }
                             ?>
                             <div class="col-3"><?php echo $date ?></div>
                             <div class="btn-group col-9" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="checkbox-<?php echo $date ?>" id="btnradio1-<?php echo $date ?>" value="2" autocomplete="off" <?php if(isset($modifying_status)&&$modifying_status ==2){echo "checked";}else if(!isset($modifying_status)){echo "checked";}?>>
+                                <input type="radio" class="btn-check" name="checkbox-<?php echo $date ?>" id="btnradio1-<?php echo $date ?>" value="2" autocomplete="off" <?php if(isset($modifying_status)&&$modifying_status ==2){echo "checked";}?>>
                                 <label class="btn btn-outline-primary" for="btnradio1-<?php echo $date ?>">◎</label>
 
                                 <input type="radio" class="btn-check" name="checkbox-<?php echo $date ?>" id="btnradio2-<?php echo $date ?>" value="1" autocomplete="off" <?php if(isset($modifying_status)&&$modifying_status == 1){echo "checked";}?>>
