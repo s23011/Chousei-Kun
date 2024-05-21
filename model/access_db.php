@@ -317,30 +317,6 @@ function get_attendee_status_from_event_id_and_event_date($event_id,$date){
     global $global_attendee_statues;
     $global_attendee_statues = null;
     foreach($rows as $row){
-        $global_attendee_statues[] = $row["status"];
-    }
-
-    return CODE_SUCCESS;
-}
-
-//new
-function get_attendee_status_all_from_event_id_and_event_date($event_id,$date){
-    global $pdo;
-
-    $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND date = ?";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($event_id,$date));
-
-    $rows = $q->fetchAll();
-
-    if(!$rows){
-        add_msg("Get attendee info do not exist.". json_encode($date));
-        return CODE_ERROR;
-    }
-
-    global $global_attendee_statues;
-    $global_attendee_statues = null;
-    foreach($rows as $row){
         $attendee_name = decode_spchar($row["attendee_name"]);
         $global_attendee_statues[$attendee_name] = $row["status"];
     }

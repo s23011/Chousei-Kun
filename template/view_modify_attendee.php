@@ -11,21 +11,31 @@
     }
 
     if(!isset($_GET["eid"])){
-        header("Location: ../index.php");
+        unset($_SESSION["event_id"]);
+        unset($_SESSION['event_info']);
+        unset($_SESSION['attendee_info_list']);
+        unset($_SESSION['attendee_status_list']);
+
+        unset($_SESSION['view_attendee_form']);
+        unset($_SESSION['attendee_form_action']);
+        unset($_SESSION['modifying_attendee_name']);
+
+        header("Location: index.php");
         exit();
     }
     $event_id = $_GET['eid'];
 
-    if(!isset($_SESSION['event_info'])){
-        $_SESSION['event_id'] = $event_id;
+    if(!isset($_SESSION["event_id"])){
+        $_SESSION["event_id"] = $event_id;
+    }else if($_SESSION["event_id"] != $event_id){
+        $_SESSION["event_id"] = $event_id;
         header("Location: controller/view_attendee.php");
         exit();
     }
-
-    if(isset($_COOKIE['event_id'])){
-        $_SESSION['isCreator'] = True;
-    }else{
-        $_SESSION['isCreator'] = False;
+    
+    if(!isset($_SESSION['event_info'])){
+        header("Location: controller/view_attendee.php");
+        exit();
     }
 
     $event_name = $_SESSION['event_info']['event_name'];
@@ -36,34 +46,32 @@
         $attendee_names = $_SESSION['attendee_info_list']['attendee_names'];
         $attendee_comments = $_SESSION['attendee_info_list']['attendee_comments'];
         $attendee_num = count($attendee_names);
-        $thistime_attendee_statues = $_SESSION['thistime_attendee_statues'];
+        $attendee_status_list = $_SESSION['attendee_status_list'];
     }else{
         $attendee_num = 0;
     }
-
-    // print_r($_SESSION['event_info']);
-    // unset($_SESSION['event_info']); //testing
-    // print_r($_SESSION['attendee_status_list']);
-    // unset($_SESSION['attendee_status_list']); //testing
-
-
-    $isCreator = $_SESSION[ 'isCreator' ];
-    $view_mode = $_SESSION['view_mode'];
-
+    
+    //for creator
+    $isCreator = false;
+    $isCreator = true; // keep it 'true' for testing
+    if(isset($_COOKIE['creator_event_id_list'])){
+        $event_id_list = json_decode($_COOKIE['creator_event_id_list'],true);
+        if(in_array($event_id,$event_id_list)){
+            $isCreator = true;
+        }
+    }
     //for form
-    $form_action = $_SESSION['form_action'];
-    if(empty($_SESSION['modifying_attendee_name'])){
-        $modifying_attendee_name = NULL;
-        $modifying_attendee_index = false;
-    }else{
+    $view_attendee_form = $_SESSION['view_attendee_form'];
+    if(isset($_SESSION['attendee_form_action'])){
+        $attendee_form_action = $_SESSION['attendee_form_action'];
+    }
+    if(isset($_SESSION['modifying_attendee_name'])){
         $modifying_attendee_name = $_SESSION['modifying_attendee_name']; 
         $modifying_attendee_index = array_search($modifying_attendee_name ,$attendee_names); // return int for index,or FALSE when failed
-
+    }else{
+        $modifying_attendee_name = '';
+        $modifying_attendee_index = false;
     }
-
-    
-    $isCreator = True; // need to be delete
-    
 ?>
 
 <div class="container">
@@ -119,7 +127,7 @@
                     <th scope="col">◎</th>
                     <th scope="col">△</th>
                     <th scope="col">✕</th>
-                    <?php if(isset($attendee_names)): ?>
+                    <?php if($attendee_num > 0): ?>
                         <?php foreach ($attendee_names as $attendee_name): ?>
                             <th scope="col">
                             <a class="btny" href="controller/modify_attendee.php?attendee_name=<?php echo urlencode($attendee_name); ?>" role="button">
@@ -138,8 +146,8 @@
                         $cross_num = 0;
                         $tangle_num = 0;
                         $circle_num = 0;
-                        if(isset($thistime_attendee_statues)){
-                            foreach ($thistime_attendee_statues[$date] as $status) {
+                        if($attendee_num > 0){
+                            foreach ($attendee_status_list[$date] as $status) {
                                 switch ($status) {
                                     case 0: $cross_num++; break;
                                     case 1: $tangle_num++; break;
@@ -153,10 +161,10 @@
                     <td><?php echo $tangle_num; ?></td>
                     <td><?php echo $cross_num; ?></td>
                     <?php 
-                        if(isset($attendee_names)){
+                        if($attendee_num > 0){
                             foreach ($attendee_names as $attendee_name){
-                                if(array_key_exists($attendee_name,$thistime_attendee_statues[$date])){
-                                    $mark = show_mark($thistime_attendee_statues[$date][$attendee_name]);
+                                if(array_key_exists($attendee_name,$attendee_status_list[$date])){
+                                    $mark = show_mark($attendee_status_list[$date][$attendee_name]);
                                     echo "<td>".$mark."</td>";
                                 }else{
                                     echo "<td></td>";
@@ -164,8 +172,6 @@
                             }
                         }
                     ?>
-
-
                 </tr>
                 <?php endforeach; ?>
                 <tr>
@@ -173,7 +179,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <?php if(isset($attendee_comments)): ?>
+                    <?php if($attendee_num > 0): ?>
                         <?php foreach ($attendee_comments as $comment): ?>
                             <td><?php echo $comment; ?></td>
                         <?php endforeach; ?>
@@ -184,13 +190,13 @@
     </div>
 
     <!-- attendee enroll part -->
-    <?php if (!$view_mode): ?>
+    <?php if ($view_attendee_form): ?>
         <div class="row justify-content-center mt-5 mb-5">
             <div class="col-md-8">
                 <div class="border-2 border-bottom border-dark">
                     <p class="fs-3 fw-bold">出欠を入力する</p>
                 </div>
-                <form action="<?php echo "controller/".$form_action; ?>" method="POST">
+                <form action="<?php echo "controller/".$attendee_form_action; ?>" method="POST">
                     <div class="mt-3">
                         <label for="attendeeName" class="form-label">名前</label>
                         <div id="formatHelp" class="form-text">絵文字は使用できません。</div>
@@ -202,8 +208,8 @@
                         <?php foreach ($event_dates as $date): ?>
                             <?php 
                                 if($modifying_attendee_index != FALSE
-                                    && array_key_exists($modifying_attendee_name,$thistime_attendee_statues[$date])){
-                                    $modifying_status = $thistime_attendee_statues[$date][$modifying_attendee_name];
+                                    && array_key_exists($modifying_attendee_name,$attendee_status_list[$date])){
+                                    $modifying_status = $attendee_status_list[$date][$modifying_attendee_name];
                                 }
                             ?>
                             <div class="col-3"><?php echo $date ?></div>
@@ -226,6 +232,7 @@
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">入力する</button>
+                        <a class="btn btn-danger" href="controller/view_attendee.php" role="button">キャンセル</a>
                     </div>
                 </form>
             </div>
