@@ -6,6 +6,7 @@
   $_SESSION['view_attendee_form'] = false;
   unset($_SESSION['attendee_form_action']);
   unset($_SESSION['modifying_attendee_name']);
+  unset($_SESSION['event_info']);
 
   #permently part
   $event_id = $_SESSION['event_id'];

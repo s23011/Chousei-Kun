@@ -3,7 +3,7 @@ session_start();
 
 if(isset($_GET["eid"])){
     $_SESSION["event_id"] = $_GET["eid"];
-
+    unset($_SESSION['event_info']);
     $return_path = "view_event.php?eid=".$_SESSION["event_id"];
 }else{
     unset($_SESSION["event_id"]);

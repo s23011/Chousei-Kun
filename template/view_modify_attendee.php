@@ -24,14 +24,15 @@
         exit();
     }
     $event_id = $_GET['eid'];
+    
 
-    if(!isset($_SESSION["event_id"])){
-        $_SESSION["event_id"] = $event_id;
-    }else if($_SESSION["event_id"] != $event_id){
+    if(isset($_SESSION["event_id"])
+        && $_SESSION["event_id"] != $event_id){
         $_SESSION["event_id"] = $event_id;
         header("Location: controller/view_attendee.php");
         exit();
     }
+    $_SESSION["event_id"] = $event_id;
     
     if(!isset($_SESSION['event_info'])){
         header("Location: controller/view_attendee.php");
@@ -51,6 +52,8 @@
         $attendee_num = 0;
     }
     
+    print_r($_SESSION['attendee_status_list']);
+
     //for creator
     $isCreator = false;
     $isCreator = true; // keep it 'true' for testing
@@ -207,7 +210,7 @@
                         <div class="row g-3">
                         <?php foreach ($event_dates as $date): ?>
                             <?php 
-                                if($modifying_attendee_index != FALSE
+                                if($modifying_attendee_index !== FALSE
                                     && array_key_exists($modifying_attendee_name,$attendee_status_list[$date])){
                                     $modifying_status = $attendee_status_list[$date][$modifying_attendee_name];
                                 }
@@ -228,7 +231,7 @@
                     </div>
                     <div class="mt-4 mb-4">
                         <label for="comment" class="form-label">コメント</label>
-                        <input type="text" class="form-control" id="comment" name="comment" value="<?php if($modifying_attendee_index != FALSE){echo $attendee_comments[$modifying_attendee_index];} ?>">
+                        <input type="text" class="form-control" id="comment" name="comment" value="<?php if($modifying_attendee_index !== FALSE){echo $attendee_comments[$modifying_attendee_index];} ?>">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">入力する</button>

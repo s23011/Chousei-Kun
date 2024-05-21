@@ -7,6 +7,9 @@
     }
 
     $event_id = $_GET['eid'];
+    unset($_SESSION["event_id"]);
+    unset($_SESSION['event_info']);
+    
 
     $view_event_path = "http://localhost/chouseikun/"."view_event.php";
     $view_event_url = $view_event_path."?eid=".$event_id;
