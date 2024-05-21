@@ -6,7 +6,6 @@ include_once("connection.php");
 
 function get_event_info_from_event_id($event_id){
     if(check_event_id_available($event_id) == CODE_ERROR){ 
-        add_msg("Not a available event id:".$event_id);
         return CODE_ERROR;
     }
     
@@ -19,7 +18,6 @@ function get_event_info_from_event_id($event_id){
     $row = $q->fetch();
 
     if(!$row){
-        add_msg("The event do not exist.(".$event_id.")");
         return CODE_ERROR;
     }
 
@@ -55,13 +53,6 @@ function create_event($event_name,$event_dates,$event_memo){
 
     //If id is exist.Maybe return and try again is better than while loop to create new id. 
     if(get_event_info_from_event_id($create_event_id) == CODE_SUCCESS){
-        
-        add_msg("Please try again to create event.");
-        return CODE_ERROR;
-    }
-
-    if(check_event_id_available($create_event_id) == CODE_ERROR){
-        add_msg("Method for checking event id need to update.");
         return CODE_ERROR;
     }
 
@@ -73,8 +64,7 @@ function create_event($event_name,$event_dates,$event_memo){
     $q = $pdo->prepare($sql);
     $q->execute(array($create_event_id,$event_name,$event_dates,$event_memo));
 
-    if(!$q){ 
-        add_msg("Create event in error.");
+    if(!$q){
         return CODE_ERROR;
     }
     
@@ -98,7 +88,6 @@ function modify_event($event_id,$event_name,$event_dates,$event_memo){
     $q->execute(array($event_name,$event_dates,$event_memo,$event_id));
 
     if(!$q){ 
-        add_msg("Modify event info in error");
         return CODE_ERROR;
     }
 
@@ -127,9 +116,6 @@ function delete_event_from_event_id($event_id){
 
     return CODE_SUCCESS;
 }
-
-
-
 
 function get_attendee_info_from_event_id($event_id){
     global $pdo;
@@ -169,7 +155,6 @@ function get_attendee_statuses_from_event_id_and_attendee_name($event_id,$attend
     $rows = $q->fetchAll();
 
     if(!$rows){ 
-        add_msg("The attendee do not exist.");
         return CODE_ERROR;
     }
 
@@ -196,8 +181,7 @@ function create_attendee_info($event_id,$attendee_name,$attendee_comment){
 
     $row = $q->fetch();
 
-    if($row){ 
-        add_msg("The attendee name already exist.");
+    if($row){
         return CODE_ERROR;
     }
 
@@ -205,8 +189,7 @@ function create_attendee_info($event_id,$attendee_name,$attendee_comment){
     $q = $pdo->prepare($sql);
     $q->execute(array($event_id,$attendee_name,$attendee_comment));
 
-    if(!$q){ 
-        add_msg("Create attendee info in error.");
+    if(!$q){
         return CODE_ERROR;
     }
 
@@ -224,7 +207,6 @@ function create_attendee_status($event_id,$attendee_name,$date,$status){
 
     $row = $q->fetch();
     if($row){
-        add_msg("The attendee status already exist");
         return CODE_ERROR;
     }
 
@@ -233,7 +215,6 @@ function create_attendee_status($event_id,$attendee_name,$date,$status){
     $q->execute(array($event_id,$attendee_name,$date,$status));
 
     if(!$q){
-        add_msg("Create attendee status in error.");
         return CODE_ERROR;
     }
 
@@ -253,8 +234,7 @@ function modify_attendee_info_from_event_id_and_attendee_name($event_id,$attende
 
     $row = $q->fetch();
 
-    if(!$row){ 
-        add_msg("The attendee name do not exist.");
+    if(!$row){
         return CODE_ERROR;
     }
 
@@ -262,8 +242,7 @@ function modify_attendee_info_from_event_id_and_attendee_name($event_id,$attende
     $q = $pdo->prepare($sql);
     $q->execute(array($new_name,$new_comment,$event_id,$attendee_name,));
 
-    if(!$q){ 
-        add_msg("Modify attendee info in error.");
+    if(!$q){
         return CODE_ERROR;
     }
 
@@ -294,7 +273,6 @@ function modify_attendee_status_from_event_id_and_attendee_name($event_id,$atten
     }
 
     if(!$q){
-        add_msg("Modify attendee status in error.");
         return CODE_ERROR;
     }
 
@@ -311,7 +289,6 @@ function get_attendee_status_from_event_id_and_event_date($event_id,$date){
     $rows = $q->fetchAll();
 
     if(!$rows){
-        add_msg("Get attendee info do not exist.");
         return CODE_ERROR;
     }
 
@@ -325,38 +302,12 @@ function get_attendee_status_from_event_id_and_event_date($event_id,$date){
     return CODE_SUCCESS;
 }
 
-//count of text length is unexpected number now
-function check_txt_limit_length($txt,$limit_length){
-    $txt_length = strlen($txt);
-
-    if($txt_length > $limit_length+20){
-        add_msg("over text:".$txt."(".$txt_length);
-        return CODE_ERROR;
-    }
-
-    return CODE_SUCCESS;
-}
 
 function encode_spchar($txt){
     return htmlspecialchars($txt);
 }
 function decode_spchar($txt){
     return htmlspecialchars_decode($txt);
-}
-
-function check_event_id_available($event_id){
-    // if(!is_int((int)$event_id)){return CODE_ERROR;} //when event id only a integer value
-    return CODE_SUCCESS;
-    // return check_txt_limit_length($event_id,20);
-    // return check_int_length($event_id,1);
-}
-
-function check_int_length($number,$length){
-    $num_length = strlen((string)$number);
-
-    if($num_length != $length){return CODE_ERROR;}
-
-    return CODE_SUCCESS;
 }
 
 

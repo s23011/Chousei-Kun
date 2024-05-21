@@ -15,7 +15,7 @@
     $_SESSION['event_info']['memo'] =  $global_event_memo;
     $_SESSION['event_info']['event_dates'] =  $global_event_dates;
   }else{
-    unset($_SESSION["event_id"]);
+    add_msg("イベントが存在していない。");
     header("Location: ../index.php");
     exit();
   }

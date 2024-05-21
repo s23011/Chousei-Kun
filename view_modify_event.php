@@ -1,13 +1,38 @@
 <?php 
 session_start();
 
-if(isset($_GET["eid"])){
-    $_SESSION["event_id"] = $_GET["eid"];
-    unset($_SESSION['event_info']);
-    $return_path = "view_event.php?eid=".$_SESSION["event_id"];
-}else{
-    unset($_SESSION["event_id"]);
+//reset session form view event both [index.php] and [view_modify_event.php]
+unset($_SESSION["event_id"]);
+unset($_SESSION['event_info']);
+unset($_SESSION['attendee_info_list']);
+unset($_SESSION['attendee_status_list']);
+unset($_SESSION['view_attendee_form']);
+unset($_SESSION['attendee_form_action']);
+unset($_SESSION['modifying_attendee_name']);
 
+if(isset($_GET['eid'])){//modify mode
+    $event_id = $_GET['eid'];
+    
+    //check cookie
+    if(!isset($_COOKIE['creator_event_id_list'])){
+        $_SESSION['msg_error_list'][]="あなたが編集の権限がないです。";
+        header("Location: view_event.php?eid=".$event_id);
+        exit();
+    }
+
+    $event_id_list = json_decode($_COOKIE['creator_event_id_list'],true);
+    if(!in_array($event_id,$event_id_list)){
+        $_SESSION['msg_error_list'][]="あなたが編集の権限がないです。";
+        header("Location: view_event.php?eid=".$event_id);
+        exit();
+    }
+
+    print_r($_COOKIE);
+
+    $_SESSION["event_id"] = $event_id;
+
+    $return_path = "view_event.php?eid=".$event_id;
+}else{//create mode
     $return_path = "index.php";
 }
 ?>

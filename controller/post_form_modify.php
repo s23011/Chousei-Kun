@@ -17,6 +17,9 @@
 
             }
         }
+        add_msg("出欠情報が編集できた。",CODE_SUCCESS);
+    }else{
+        add_msg("出欠情報が編集できなかった。");
     }
 
     header( "Location: ../controller/view_attendee.php" ); 

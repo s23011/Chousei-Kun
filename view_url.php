@@ -2,7 +2,7 @@
     session_start();
 
     if(!isset($_GET['eid'])){
-        //redirect?
+        http_response_code(405);
         exit;
     }
 

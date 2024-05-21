@@ -10,17 +10,8 @@
         }
     }
 
-    if(!isset($_GET["eid"])){
-        unset($_SESSION["event_id"]);
-        unset($_SESSION['event_info']);
-        unset($_SESSION['attendee_info_list']);
-        unset($_SESSION['attendee_status_list']);
-
-        unset($_SESSION['view_attendee_form']);
-        unset($_SESSION['attendee_form_action']);
-        unset($_SESSION['modifying_attendee_name']);
-
-        header("Location: index.php");
+    if(!isset($_GET['eid'])){
+        http_response_code(405);
         exit();
     }
     $event_id = $_GET['eid'];
@@ -54,7 +45,7 @@
 
     //for creator
     $isCreator = false;
-    $isCreator = true; // keep it 'true' for testing
+    // $isCreator = true; // keep it 'true' for testing creater mode
     if(isset($_COOKIE['creator_event_id_list'])){
         $event_id_list = json_decode($_COOKIE['creator_event_id_list'],true);
         if(in_array($event_id,$event_id_list)){
@@ -73,6 +64,11 @@
         $modifying_attendee_name = '';
         $modifying_attendee_index = false;
     }
+?>
+
+
+<?php
+    include "template/message.php";
 ?>
 
 <div class="container">

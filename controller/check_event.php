@@ -14,10 +14,7 @@ if(isset($_SESSION["event_id"])){
 
         echo json_encode($event_info); 
     }else{
-        if(isset($_SESSION["msg_info_list"])){echo json_encode($_SESSION["msg_info_list"]);}
-        if(isset($_SESSION["msg_error_list"])){echo json_encode($_SESSION["msg_error_list"]);}
-
-        http_response_code(400);
+        add_msg("イベントが存在していない。");
     }
 
     exit();

@@ -19,9 +19,10 @@
         session_start();
         
         include "template/navbar.html";
-
-        include "template/message.php";
         
+        // message.php now is including in view_modify_attendee.php
+        // include "template/message.php";
+
         include "template/view_modify_attendee.php";
         ?>
 
