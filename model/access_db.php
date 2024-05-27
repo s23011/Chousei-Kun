@@ -22,7 +22,8 @@ function get_event_info_from_event_id($event_id){
     $event_memo = decode_spchar($row["memo"]);
 
     $event_dates = preg_split("/\r\n|\n|\r/", $row["dates"]); //Split string by newline for mutiple os
-    $event_dates = array_unique($event_dates);  //Check the event_dates has any duplicate dates.
+    $event_dates = array_unique($event_dates); //Check the event_dates has any duplicate dates.
+    $event_dates = array_values($event_dates); //Reset array index after "array_unique"
 
     global $global_event_name,$global_event_dates,$global_event_memo;
 
