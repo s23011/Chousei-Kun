@@ -70,7 +70,7 @@ if(isset($_GET['eid'])){//modify mode
     <?php if(isset($_SESSION["event_id"])):?>
 
         <div class="float-end mx-4 mb-4">
-            <button class="btn btn-outline-danger mx-2" onclick="location.href='controller/delete_event.php'">削除</button>
+            <button class="btn btn-outline-danger mx-2" onclick="deleteEvent()">削除</button>
             <button class="btn btn-outline-primary" onclick="location.href='<?php echo $return_path ?>'">戻る</button>
         </div>
     <?php endif; ?>
@@ -98,4 +98,12 @@ if(isset($_GET['eid'])){//modify mode
     $('#datepicker').on('changeDate', function() {
         $('#dates').val($('#dates').val()+$('#datepicker').datepicker('getFormattedDate')+'\r\n');
     });
+
+    function deleteEvent() {
+        if (confirm("本当にイベントを削除してもよいのか")) {
+            window.location.href = "controller/delete_event.php";
+        }else{
+            
+        }
+    }
 </script>

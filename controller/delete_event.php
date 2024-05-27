@@ -28,7 +28,6 @@ if(!in_array($event_id,$event_id_list)){
     exit();
 }
 
-
 if(delete_event_from_event_id($event_id) == CODE_SUCCESS){
     add_msg("イベントを削除した。",CODE_SUCCESS);
 

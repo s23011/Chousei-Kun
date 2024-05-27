@@ -10,6 +10,7 @@
 
   #permently part
   $event_id = $_SESSION['event_id'];
+  
   if(get_event_info_from_event_id($event_id) == CODE_SUCCESS) {
     $_SESSION['event_info']['event_name'] =  $global_event_name;
     $_SESSION['event_info']['memo'] =  $global_event_memo;
