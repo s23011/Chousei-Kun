@@ -40,7 +40,11 @@
                 <input type="text" class="form-control" id="comment" name="comment" value="<?php if($modifying_attendee_index !== FALSE){echo $attendee_comments[$modifying_attendee_index];} ?>">
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">入力する</button>
+                <?php if($modifying_attendee_index === FALSE): ?>
+                    <button type="submit" class="btn btn-primary">入力する</button>
+                <?php else: ?>
+                    <button type="submit" class="btn btn-primary">更新する</button>
+                <?php endif; ?>
                 <a class="btn btn-danger" href="controller/view_attendee.php" role="button">キャンセル</a>
             </div>
         </form>
