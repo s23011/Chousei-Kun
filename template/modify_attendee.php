@@ -7,7 +7,7 @@
             <div class="mt-3">
                 <label for="attendeeName" class="form-label">名前</label>
                 <div id="formatHelp" class="form-text">絵文字は使用できません。</div>
-                <input type="text" class="form-control" id="attendeeName" name="attendeeName" aria-describedby="formatHelp" value="<?php echo $modifying_attendee_name; ?>">
+                <input type="text" class="form-control" id="attendeeName" name="attendeeName" aria-describedby="formatHelp" value="<?php echo $modifying_attendee_name; ?>" required>
             </div>
             <div class="mt-4"> 
                 <p>日にち候補</p> 

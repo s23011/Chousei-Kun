@@ -59,7 +59,8 @@
     }
     if(isset($_SESSION['modifying_attendee_name'])){
         $modifying_attendee_name = $_SESSION['modifying_attendee_name']; 
-        $modifying_attendee_index = array_search($modifying_attendee_name ,$attendee_names); // return int for index,or FALSE when failed
+        // return index num when attedee exist,otherwise return FALSE(boolean)
+        $modifying_attendee_index = array_search($modifying_attendee_name ,$attendee_names); 
     }else{
         $modifying_attendee_name = '';
         $modifying_attendee_index = false;

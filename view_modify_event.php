@@ -87,9 +87,11 @@ if(isset($_GET['eid'])){//modify mode
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet"/>
 
 <!--Script-->
-<script type="text/javascript" src="myscript.js"></script>
+<script type="text/javascript" src="myscript.js">
+    get_event_info();
+</script>
 <script type="text/javascript">
-    get_event_info(); // function from myscript.js
+    
 
     $('#datepicker').datepicker({
             todayHighlight: true,

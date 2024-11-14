@@ -22,7 +22,7 @@
   }
 
   $_SESSION['attendee_info_list'] = array();
-  if(get_attendee_info_from_event_id($event_id) == CODE_SUCCESS) {
+  if(get_attendee_info_list_from_event_id($event_id) == CODE_SUCCESS) {
     $_SESSION['attendee_info_list']['attendee_names'] =  $global_attendee_names;
     $_SESSION['attendee_info_list']['attendee_comments'] =  $global_attendee_comments;
   }
@@ -30,7 +30,7 @@
   $_SESSION['attendee_status_list'] = array();
   foreach($global_event_dates as $event_date){
 
-    if(get_attendee_status_from_event_id_and_event_date($event_id,$event_date) == CODE_SUCCESS){
+    if(get_attendee_status_list_from_event_id_and_event_date($event_id,$event_date) == CODE_SUCCESS){
       $_SESSION['attendee_status_list'][$event_date] =  $global_attendee_statues;
     }else{
       $_SESSION['attendee_status_list'][$event_date] = array();

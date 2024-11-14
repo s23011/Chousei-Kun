@@ -115,7 +115,7 @@ function delete_event_from_event_id($event_id){
     return CODE_SUCCESS;
 }
 
-function get_attendee_info_from_event_id($event_id){
+function get_attendee_info_list_from_event_id($event_id){
     global $pdo;
 
     $sql = "SELECT * FROM attendee_info WHERE event_id = ?";
@@ -141,27 +141,24 @@ function get_attendee_info_from_event_id($event_id){
     return CODE_SUCCESS;
 }
 
-function get_attendee_statuses_from_event_id_and_attendee_name($event_id,$attendee_name){
+function get_attendee_status_list_from_event_id_and_event_date($event_id,$date){
     global $pdo;
 
-    $attendee_name = encode_spchar($attendee_name);
-
-    $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND attendee_name = ?";
+    $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND date = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($event_id,$attendee_name));
+    $q->execute(array($event_id,$date));
 
     $rows = $q->fetchAll();
 
-    if(!$rows){ 
+    if(!$rows){
         return CODE_ERROR;
     }
 
-    global $global_attendee_dates,$global_attendee_statuses;
+    global $global_attendee_statues;
+    $global_attendee_statues = null;
     foreach($rows as $row){
-        $date = decode_spchar($row["date"]);
-
-        $global_attendee_dates[] = $date;
-        $global_attendee_statuses[] = $row["status"];
+        $attendee_name = decode_spchar($row["attendee_name"]);
+        $global_attendee_statues[$attendee_name] = $row["status"];
     }
 
     return CODE_SUCCESS;
@@ -277,28 +274,7 @@ function modify_attendee_status_from_event_id_and_attendee_name($event_id,$atten
     return CODE_SUCCESS;
 }
 
-function get_attendee_status_from_event_id_and_event_date($event_id,$date){
-    global $pdo;
 
-    $sql = "SELECT * FROM attendee_status WHERE event_id = ? AND date = ?";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($event_id,$date));
-
-    $rows = $q->fetchAll();
-
-    if(!$rows){
-        return CODE_ERROR;
-    }
-
-    global $global_attendee_statues;
-    $global_attendee_statues = null;
-    foreach($rows as $row){
-        $attendee_name = decode_spchar($row["attendee_name"]);
-        $global_attendee_statues[$attendee_name] = $row["status"];
-    }
-
-    return CODE_SUCCESS;
-}
 
 
 function encode_spchar($txt){
